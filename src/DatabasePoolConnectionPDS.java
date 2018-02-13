@@ -3,7 +3,7 @@
  * 13-02-2018 1.1
  * PDS : Projet MASK
  * 
- * Interface servant à réaliser un pool de connexion test
+ * Interface servant à réaliser un pool de connexion testssss
  * Le pool de connexion permet de réutiliser les connexions physiques à la base de données ORACLE 
  * qui prennent beaucoup de temps et les réaffecte pour des nouvelles demandes de connexions côté clients. 
  * Il est possible de l’implémenter avec JDBC.
