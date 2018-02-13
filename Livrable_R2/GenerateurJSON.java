@@ -3,12 +3,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.FileWriter;
 import java.io.IOException;
-amine
 
 public class GenerateurJSON {
 
     public static void main(String[] args) {
-        // Vérification des arguments
+        // Vérification des arguments /pull sam
         if(args.length != 1) {
             System.err.println("Erreur : vous devez spécifier le nom du fichier JSON.");
             System.err.println();
