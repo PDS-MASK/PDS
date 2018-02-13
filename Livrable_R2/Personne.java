@@ -5,7 +5,7 @@
     private int age;
 
     /**
-     * Constructeur par initialisation.
+     * Constructeur par initialisations.
      */
     public Personne(String nom, String prenom, int age) {
         this.nom = nom;
