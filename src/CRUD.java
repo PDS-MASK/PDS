@@ -8,7 +8,7 @@ import java.sql.Statement;
 public class CRUD {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stubb
+		// TODO Auto-generated method stub
 
 		
 	Connection connection = null;
