@@ -29,17 +29,25 @@ public interface DatabasePoolConnectionPDS {
 	
 	//Construit un pool de connexion avec comme paramètre le PoolDataSource qui va stocker les connexions,
 	//le nombre maximum de connexion et le délai d'attente avant d'ouvrir une nouvelle connexion (en seconde)
-	void DBConnexionPoolDataSource(ConnectionPoolDataSource dataSource,int maxConnection, int timeout);
+	/* 
+	 * récup les paramètres de connection et se co à la BD
+	 * try : créer une connexion qui se rattache à la bd et est ajoutée au pool
+	 * 
+	 */
+	Connection DBConnexionPoolDataSource(OracleConnectionPoolDataSource ocpds);
+	
 	
 	//Intercepter une connexion entrante et l'intégrer au Pool
 	Connection getConnection();
+	/*
+	 * 
+	 */
 	
 	void resetPoolDataSource(ConnectionPoolDataSource dataSource);
 	
 	int getMaxConnections();
 	
-	void closeUnusedPooledConnection();
 	
-	void closeConnction();
+	void closeConnection();
 
 }

@@ -1,3 +1,31 @@
+Copie de ConnexionPool.java
+DÉTAILS
+ACTIVITÉ
+Informations de partage
+Chargement des informations de partage…
+Informations générales
+Type
+Java
+Taille
+2 Ko (1 707 octets)
+Espace de stockage utilisé
+2 Ko (1 707 octets)
+Emplacement
+Pool_de_connexion
+Propriétaire
+moi
+Modifié
+le 30 janv. 2018 par moi
+Ouvert
+le 11:46 par moi
+Créé
+30 janv. 2018 avec Google Drive Web
+Description
+Ajouter une description
+Autorisations de téléchargement
+Les lecteurs peuvent télécharger
+Tous les éléments ont été désélectionnés. 
+
 /*
  * 
  * 13-01-2018
@@ -39,6 +67,7 @@ public class ConnexionPool {
     rs.next();
     String msg = "Total connections after ";
     System.out.println(msg + "conn_1: " + rs.getString(1));
+    
 
     conn_1.close();
     pc_1.close();
