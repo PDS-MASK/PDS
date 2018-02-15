@@ -1,40 +1,13 @@
-Copie de ConnexionPool.java
-DÉTAILS
-ACTIVITÉ
-Informations de partage
-Chargement des informations de partage…
-Informations générales
-Type
-Java
-Taille
-2 Ko (1 707 octets)
-Espace de stockage utilisé
-2 Ko (1 707 octets)
-Emplacement
-Pool_de_connexion
-Propriétaire
-moi
-Modifié
-le 30 janv. 2018 par moi
-Ouvert
-le 11:46 par moi
-Créé
-30 janv. 2018 avec Google Drive Web
-Description
-Ajouter une description
-Autorisations de téléchargement
-Les lecteurs peuvent télécharger
-Tous les éléments ont été désélectionnés. 
 
 /*
  * 
  * 13-01-2018
  * PDS : Projet MASK
  * 
- * Classe servant à réaliser un pool de connexion
- * Le pool de connexion permet de réutiliser les connexions physiques à la base de données ORACLE 
- * qui prennent beaucoup de temps et les réaffecte pour des nouvelles demandes de connexions côté clients. 
- * Il est possible de l’implémenter avec JDBC.
+ * Classe servant Ã  rÃ©aliser un pool de connexion
+ * Le pool de connexion permet de rÃ©utiliser les connexions physiques Ã  la base de donnÃ©es ORACLE 
+ * qui prennent beaucoup de temps et les rÃ©affecte pour des nouvelles demandes de connexions cÃ´tÃ© clients. 
+ * Il est possible de lâ€™implÃ©menter avec JDBC.
  * 
  * @AmineHamdi
  */
@@ -50,16 +23,16 @@ import oracle.jdbc.pool.OracleConnectionPoolDataSource;
 public class ConnexionPool {
 	
   public static void main(String[] args) throws Exception {
-	//On crée notre poolDataSource qui va produire des instances de connexion et les stocker
+	//On crÃ©e notre poolDataSource qui va produire des instances de connexion et les stocker
     OracleConnectionPoolDataSource ocpds = new OracleConnectionPoolDataSource();
-    //On met nos paramètres
+    //On met nos paramÃ¨tres
     ocpds.setURL("jdbc:oracle:thin:@localhost:1521:ORCL");
     ocpds.setUser("user");
     ocpds.setPassword("password");
-    //On crée un object de type PooledConnection afin d'établir une connexion à la base
+    //On crÃ©e un object de type PooledConnection afin d'Ã©tablir une connexion Ã  la base
     PooledConnection pc_1 = ocpds.getPooledConnection();
-    //On crée une instance de Connection et on la stocke dans notre PooledConnection. Ainsi, si la connexion est interrompue,
-    //la connexion "physique" restera maintenue à travers PooledConnection
+    //On crÃ©e une instance de Connection et on la stocke dans notre PooledConnection. Ainsi, si la connexion est interrompue,
+    //la connexion "physique" restera maintenue Ã  travers PooledConnection
     Connection conn_1 = pc_1.getConnection();
     Statement stmt = conn_1.createStatement();
 
