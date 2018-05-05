@@ -47,7 +47,7 @@ public class Gestion_des_stocks extends JFrame {
 	public void theQuery(String query){
 		Connection connection = null;
 		try {
-			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","ahamdi","resident4");	
+			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","ahamdi","");	
 			Statement stmt = null;
 			stmt = connection.createStatement();
 			ResultSet result = stmt.executeQuery(query);
