@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
@@ -22,6 +23,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import general.Administration;
+import net.proteanit.sql.DbUtils;
+
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -41,8 +44,8 @@ public class Gestion_des_stocks extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Gestion_des_stocks frame = new Gestion_des_stocks();
-					frame.setVisible(true);
+					Gestion_des_stocks frame1 = new Gestion_des_stocks();
+					frame1.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -64,6 +67,7 @@ public class Gestion_des_stocks extends JFrame {
 				for(int i = 1; i <=  resultMeta.getColumnCount(); i++)
 					System.out.print(result.getObject(i).toString());  
 			}
+			
 			result.close();
 			stmt.close();
 			JOptionPane.showMessageDialog(null,"Query Executed");
@@ -88,6 +92,7 @@ public class Gestion_des_stocks extends JFrame {
 			JOptionPane.showMessageDialog(null,ex.getMessage());
 		}
 	}
+	
 
 	/**
 	 * Create the frame.
@@ -99,6 +104,7 @@ public class Gestion_des_stocks extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
 
 		JLabel lblGestionDesStocks = new JLabel("Gestion des stocks");
 		lblGestionDesStocks.setFont(new Font("Berlin Sans FB", Font.BOLD, 25));
@@ -136,13 +142,13 @@ public class Gestion_des_stocks extends JFrame {
 		table.setBounds(24, 157, 385, -106);
 		contentPane.add(table);
 
-		// create a table model and set a Column Identifiers to this model 
-		Object[] columns = {"Nom","Catégorie","Genre","Description"};
-		DefaultTableModel model = new DefaultTableModel();
-		model.setColumnIdentifiers(columns);
-
-		// set the model to the table
-		table.setModel(model);
+//		// create a table model and set a Column Identifiers to this model 
+//		Object[] columns = {"Nom","Catégorie","Genre","Description"};
+//		DefaultTableModel model = new DefaultTableModel();
+//		model.setColumnIdentifiers(columns);
+//
+//		// set the model to the table
+//		table.setModel(model);
 
 		// Change A JTable Background Color, Font Size, Font Color, Row Height
 		table.setBackground(Color.LIGHT_GRAY);
@@ -199,9 +205,9 @@ public class Gestion_des_stocks extends JFrame {
 		txtDescription.setBounds(10, 268, 127, 19);
 		contentPane.add(txtDescription);
 		
-		JButton btnModifierUnArticle = new JButton("Modifier un article");
-		btnModifierUnArticle.setBounds(10, 413, 201, 21);
-		contentPane.add(btnModifierUnArticle);
+//		JButton btnModifierUnArticle = new JButton("Modifier un article");
+//		btnModifierUnArticle.setBounds(10, 413, 201, 21);
+//		contentPane.add(btnModifierUnArticle);
 		
 		 // create an array of objects to set the row data
         Object[] row = new Object[4];
@@ -218,7 +224,7 @@ public class Gestion_des_stocks extends JFrame {
                 row[3] = textDescription.getText();
                 
                 // add row to the model
-                model.addRow(row);
+               // model.addRow(row);
             }
         });
 
@@ -232,7 +238,9 @@ public class Gestion_des_stocks extends JFrame {
                 int i = table.getSelectedRow();
                 if(i >= 0){
                     // remove a row from jtable
-                    model.removeRow(i);
+                    //model.removeRow(i);
+                	theQuery("DELETE * FROM ARTICLE WHERE ID_ARTICLE="+table.getSelectedColumn());
+
                 }
                 else{
                     System.out.println("Delete Error");
@@ -240,27 +248,47 @@ public class Gestion_des_stocks extends JFrame {
             }
         });
         
-     // button update row
-        btnModifierUnArticle.addActionListener(new ActionListener(){
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-             
-                // i = the index of the selected row
-                int i = table.getSelectedRow();
-                
-                if(i >= 0) 
-                {
-                   model.setValueAt(textNom.getText(), i, 0);
-                   model.setValueAt(textCategorie.getText(), i, 1);
-                   model.setValueAt(textGenre.getText(), i, 2);
-                   model.setValueAt(textDescription.getText(), i, 3);
-                }
-                else{
-                    System.out.println("Update Error");
-                }
-            }
-        });
+//     // button update row
+//        btnModifierUnArticle.addActionListener(new ActionListener(){
+//
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//             
+//                // i = the index of the selected row
+//                int i = table.getSelectedRow();
+//                
+//                if(i >= 0) 
+//                {
+//                   table.getModel().setValueAt(textNom.getText(), i, 0);
+//                   table.getModel().setValueAt(textCategorie.getText(), i, 1);
+//                   table.getModel().setValueAt(textGenre.getText(), i, 2);
+//                   table.getModel().setValueAt(textDescription.getText(), i, 3);
+//                }
+//                else{
+//                    System.out.println("Update Error");
+//                }
+//            }
+//        });
+        
+        showTableData();
 
 	}
+	
+	
+  	public void showTableData(){
+		try{
+		Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","ahamdi","");
+		String sql = "Select * from article";
+		Object pst = connection.prepareStatement(sql);
+		Object rs = ((PreparedStatement) pst).executeQuery();
+		table.setModel(DbUtils.resultSetToTableModel((ResultSet) rs));
+		System.out.print(" "+ rs);
+		
+		}
+		catch(Exception ex){
+		JOptionPane.showMessageDialog(null, ex);
+		 
+		}
+		 
+		}
 }
