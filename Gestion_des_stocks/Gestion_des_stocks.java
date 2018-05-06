@@ -22,11 +22,17 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import general.Administration;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class Gestion_des_stocks extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
+	private JTextField txtNom;
+	private JTextField txtCatgorie;
+	private JTextField txtGenre;
+	private JTextField txtDescription;
 
 	/**
 	 * Launch the application.
@@ -88,7 +94,7 @@ public class Gestion_des_stocks extends JFrame {
 	 */
 	public Gestion_des_stocks() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 812, 495);
+		setBounds(100, 100, 1036, 508);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -96,7 +102,7 @@ public class Gestion_des_stocks extends JFrame {
 
 		JLabel lblGestionDesStocks = new JLabel("Gestion des stocks");
 		lblGestionDesStocks.setFont(new Font("Berlin Sans FB", Font.BOLD, 25));
-		lblGestionDesStocks.setBounds(283, 10, 228, 41);
+		lblGestionDesStocks.setBounds(357, 5, 228, 41);
 		contentPane.add(lblGestionDesStocks);
 
 		JButton btnGestionDesBons = new JButton("Test affichage des produits");
@@ -123,7 +129,7 @@ public class Gestion_des_stocks extends JFrame {
 		contentPane.add(btnAjouterUnArticle);
 
 		JButton btnSupprimerUnArticle = new JButton("Supprimer un article");
-		btnSupprimerUnArticle.setBounds(585, 390, 201, 21);
+		btnSupprimerUnArticle.setBounds(10, 436, 201, 21);
 		contentPane.add(btnSupprimerUnArticle);
 
 		table = new JTable();
@@ -147,13 +153,114 @@ public class Gestion_des_stocks extends JFrame {
 
 		// create JScrollPane
 		JScrollPane pane = new JScrollPane(table);
-		pane.setBounds(10, 58, 776, 322);
+		pane.setBounds(147, 56, 863, 324);
 
 		getContentPane().setLayout(null);
 
 		getContentPane().add(pane);
+		
+		JTextArea textNom = new JTextArea();
+		textNom.setBounds(10, 88, 127, 22);
+		contentPane.add(textNom);
+		
+		JTextArea textCategorie = new JTextArea();
+		textCategorie.setBounds(10, 152, 127, 22);
+		contentPane.add(textCategorie);
+		
+		JTextArea textGenre = new JTextArea();
+		textGenre.setBounds(10, 225, 127, 22);
+		contentPane.add(textGenre);
+		
+		JTextArea textDescription = new JTextArea();
+		textDescription.setBounds(10, 297, 127, 22);
+		contentPane.add(textDescription);
+		
+		txtNom = new JTextField();
+		txtNom.setText("Nom");
+		txtNom.setBounds(10, 67, 127, 19);
+		contentPane.add(txtNom);
+		txtNom.setColumns(10);
+		
+		txtCatgorie = new JTextField();
+		txtCatgorie.setText("Cat\u00E9gorie");
+		txtCatgorie.setColumns(10);
+		txtCatgorie.setBounds(10, 123, 127, 19);
+		contentPane.add(txtCatgorie);
+		
+		txtGenre = new JTextField();
+		txtGenre.setText("Genre");
+		txtGenre.setColumns(10);
+		txtGenre.setBounds(10, 196, 127, 19);
+		contentPane.add(txtGenre);
+		
+		txtDescription = new JTextField();
+		txtDescription.setText("Description");
+		txtDescription.setColumns(10);
+		txtDescription.setBounds(10, 268, 127, 19);
+		contentPane.add(txtDescription);
+		
+		JButton btnModifierUnArticle = new JButton("Modifier un article");
+		btnModifierUnArticle.setBounds(10, 413, 201, 21);
+		contentPane.add(btnModifierUnArticle);
+		
+		 // create an array of objects to set the row data
+        Object[] row = new Object[4];
+        
+        // button add row
+        btnAjouterUnArticle.addActionListener(new ActionListener(){
 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+             
+                row[0] = textNom.getText();
+                row[1] = textCategorie.getText();
+                row[2] = textGenre.getText();
+                row[3] = textDescription.getText();
+                
+                // add row to the model
+                model.addRow(row);
+            }
+        });
 
+     // button remove row
+        btnSupprimerUnArticle.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            
+                // i = the index of the selected row
+                int i = table.getSelectedRow();
+                if(i >= 0){
+                    // remove a row from jtable
+                    model.removeRow(i);
+                }
+                else{
+                    System.out.println("Delete Error");
+                }
+            }
+        });
+        
+     // button update row
+        btnModifierUnArticle.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+             
+                // i = the index of the selected row
+                int i = table.getSelectedRow();
+                
+                if(i >= 0) 
+                {
+                   model.setValueAt(textNom.getText(), i, 0);
+                   model.setValueAt(textCategorie.getText(), i, 1);
+                   model.setValueAt(textGenre.getText(), i, 2);
+                   model.setValueAt(textDescription.getText(), i, 3);
+                }
+                else{
+                    System.out.println("Update Error");
+                }
+            }
+        });
 
 	}
 }
