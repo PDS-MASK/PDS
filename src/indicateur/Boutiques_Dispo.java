@@ -3,6 +3,7 @@ package indicateur;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableModel;
@@ -14,11 +15,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import javax.swing.table.DefaultTableModel;
 
 public class Boutiques_Dispo extends JFrame {
 
 	private JFrame frmBoutiquesDisponibles;
 	private JTable table;
+	private JTable table_1;
 
 	/**
 	 * Launch the application.
@@ -52,31 +57,35 @@ public class Boutiques_Dispo extends JFrame {
 		frmBoutiquesDisponibles.setBounds(100, 100, 450, 300);
 		frmBoutiquesDisponibles.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmBoutiquesDisponibles.getContentPane().setLayout(null);
-		String[] b;
-		String[] entetes = {"Nom", "surface"};
-		table = new JTable();
-		table.setFont(new Font("Sylfaen", Font.PLAIN, 11));
-		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		table.setBounds(34, 108, 202, -31);
+		String[] entete = {"Nom", "surface en m²"};
 		Analyse a = new Analyse();
 		List<Emplacement> l = new ArrayList<>();
-		System.out.println("boutiques dispo");
 		try {
 			l = a.BoutiquesDispo();
+			Object[][] data = new Object [l.size()][2];
 			for(int i=0; i<l.size();i++) {
-				System.out.println(i+"::::::"+l.get(i));
+				System.out.println(i+"::::::"+l.get(i).getNom());
+				data[i][0]=l.get(i).getNom();
+				System.out.println("blaaaaaaaaaa"+"       "+data[i][0]);
+				data[i][1]=l.get(i).getSurface();
+				System.out.println("blaaaaaaaaaa"+"       "+data[i][1]);
 				}
-			table = new JTable((TableModel) l);
-		
-			
+			table=new JTable(data,entete);
+			table.setBounds(10, 240, 424, -228);
+			table.setSurrendersFocusOnKeystroke(true);
+			System.out.println("bibibibibibi"+"       "+data[0][0]);
+			System.out.println("bobobobobobo"+"       "+data[1][0]);
 		
 			
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		frmBoutiquesDisponibles.getContentPane().add(new JScrollPane(table), BorderLayout.CENTER);
 		
-		frmBoutiquesDisponibles.getContentPane().add(table);
+		
+		//frmBoutiquesDisponibles.getContentPane().add(table_1);
+		//frmBoutiquesDisponibles.pack();
+		frmBoutiquesDisponibles.setVisible(true);
 	}
-	
 }

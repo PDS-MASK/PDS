@@ -1,7 +1,6 @@
 package indicateur;
 
 
-import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,14 +16,11 @@ public class Analyse {
 		
 		Connection connexion = Bdd.getConnection();
 		List<Emplacement> emplacement = new ArrayList<Emplacement>();
-		
 		Statement ordre = connexion.createStatement();
 		String sql = "SELECT NOM_EMPLACELEMENT, SUPERFICIE from emplacement e, historique_emplacement h where e.id_emplacement = h.id_emplacement and date_ is null";
-
 		ResultSet rs = ordre.executeQuery(sql);
 		while(rs.next()) {
 			System.out.println("if");
-			ArrayList<String> boutiques = new ArrayList<>();
 			emplacement.add(new Emplacement(rs.getString(1), rs.getString(2)));
 			
 			System.out.println("boutiques");
@@ -107,21 +103,43 @@ public int affichePannee() throws SQLException {
 	return cpt;
 
 }
-public float achatsjour() throws SQLException {
+public float achatsjour(String id_boutique) throws SQLException {
 	
 	Connection connexion = Bdd.getConnection();
-	int cpt = 0;
+	float cpt = 0;
 	Statement ordre = connexion.createStatement();
-	String sql = "SELECT date_visite - sysdate as datediff from visite  ";
+	String sql = "select sum(prix_commande) from commanda_sousarticle c, sous_article sc , commande co where co.ID_COMMANDE = c.ID_COMMANDE and c.ID_SOUSARTICLE = sc.ID_SOUSARTICLE and sc.ID_BOUTIQUE ="+ id_boutique +"and TO_DATE(sysdate, 'yyyy/mm/dd') = TO_DATE(co.DATE_COMMANDE, 'yyyy/mm/dd') ";
 	System.out.println("req");
 	ResultSet rs = ordre.executeQuery(sql);
 	
 	while(rs.next()) {
-		if (rs.getRow()<= 365) {
-			cpt++;
+			cpt = rs.getFloat(1);
 			System.out.println("p");
 
-		}
+		
+	}
+	
+	
+	ordre.close();
+	connexion.close();
+	return cpt;
+
+}
+public float achatsmois(String id_boutique) throws SQLException {
+	
+	Connection connexion = Bdd.getConnection();
+	float cpt = 0;
+	Statement ordre = connexion.createStatement();
+	String sql = "select sum(prix_commande) from commanda_sousarticle c, sous_article sc , commande co where co.ID_COMMANDE = c.ID_COMMANDE and c.ID_SOUSARTICLE = sc.ID_SOUSARTICLE and sc.ID_BOUTIQUE ="+ id_boutique +"and to_char(sysdate, 'MM') = to_char(co.DATE_COMMANDE, 'MM') ";
+	System.out.println("req");
+	ResultSet rs = ordre.executeQuery(sql);
+	
+	while(rs.next()) {
+		
+			cpt = rs.getFloat(1);
+			System.out.println("p");
+
+		
 		
 	}
 	
