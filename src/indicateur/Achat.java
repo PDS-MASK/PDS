@@ -48,7 +48,16 @@ public class Achat extends JFrame{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Achats");
 		frame.getContentPane().setLayout(null);
-		
+		JButton retour = new JButton("retour");
+		retour.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false);
+				Indicateur c = new Indicateur();
+				//c.setVisible(true);
+			}
+		});
+		retour.setBounds(350, 230, 75, 20);
+		frame.add(retour);
 		id_boutique = new JTextField();
 		id_boutique.setBounds(38, 56, 113, 20);
 		frame.getContentPane().add(id_boutique);

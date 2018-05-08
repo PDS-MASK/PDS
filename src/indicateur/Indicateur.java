@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Indicateur {
+public class Indicateur extends JFrame{
 
 	private JFrame frmIndicateurs;
 
@@ -52,7 +52,7 @@ public class Indicateur {
 			public void actionPerformed(ActionEvent e) {
 				frmIndicateurs.setVisible(false);
 				Client c = new Client();
-				c.setVisible(true);
+				//c.setVisible(true);
 				System.out.println("bouton client");
 			}
 		});
@@ -60,11 +60,19 @@ public class Indicateur {
 		frmIndicateurs.getContentPane().add(btnClients);
 		
 		JButton btnBoutiques = new JButton("Boutiques");
+		btnBoutiques.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmIndicateurs.setVisible(false);
+				Boutiques b = new Boutiques();
+				//b.setVisible(true);
+			}
+		});
 		btnBoutiques.setBounds(183, 107, 91, 33);
 		frmIndicateurs.getContentPane().add(btnBoutiques);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(159, 47, 46, 14);
+		JLabel lblNewLabel = new JLabel("Affichage des indicateurs");
+		lblNewLabel.setBounds(159, 47, 300, 14);
 		frmIndicateurs.getContentPane().add(lblNewLabel);
+		frmIndicateurs.setVisible(true);
 	}
 }

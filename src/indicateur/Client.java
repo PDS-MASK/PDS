@@ -61,6 +61,16 @@ public class Client extends JFrame {
 		JLabel derniereannee = new JLabel("");
 		JLabel derniersemestre = new JLabel("");
 		aujourdhui.setBounds(295, 108, 46, 23);
+		JButton retour = new JButton("retour");
+		retour.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmIndicateurs.setVisible(false);
+				Indicateur c = new Indicateur();
+				//c.setVisible(true);
+			}
+		});
+		retour.setBounds(350, 230, 75, 20);
+		frmIndicateurs.add(retour);
 		JButton btnAujourdhui = new JButton("Aujourd'hui");
 		btnAujourdhui.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -132,5 +142,6 @@ public class Client extends JFrame {
 		
 		derniereannee.setBounds(295, 197, 46, 23);
 		frmIndicateurs.getContentPane().add(derniereannee);
+		frmIndicateurs.setVisible(true);
 	}
 }
