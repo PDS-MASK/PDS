@@ -57,7 +57,7 @@ public class Gestion_des_stocks extends JFrame {
 	public void theQuery(String query){
 		Connection connection = null;
 		try {
-			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","ahamdi","resident4");	
+			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","ahamdi","");	
 			Statement stmt = null;
 			stmt = connection.createStatement();
 			ResultSet result = stmt.executeQuery(query);
@@ -144,7 +144,7 @@ public class Gestion_des_stocks extends JFrame {
 		contentPane.add(table);
 
 //		// create a table model and set a Column Identifiers to this model 
-//		Object[] columns = {"Nom","Catégorie","Genre","Description"};
+//		Object[] columns = {"Nom","CatÃ©gorie","Genre","Description"};
 //		DefaultTableModel model = new DefaultTableModel();
 //		model.setColumnIdentifiers(columns);
 //
@@ -288,7 +288,7 @@ public class Gestion_des_stocks extends JFrame {
 	
   	public void showTableData(){
 		try{
-		Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","ahamdi","resident4");
+		Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","ahamdi","");
 		String sql = "SELECT NOM_BOUTIQUE, NOM_ARTICLE, TAILLE, COULEUR, STOCK FROM ARTICLE INNER JOIN SOUS_ARTICLE ON ARTICLE.ID_ARTICLE = SOUS_ARTICLE.ID_ARTICLE INNER JOIN BOUTIQUE ON BOUTIQUE.ID_BOUTIQUE = SOUS_ARTICLE.ID_BOUTIQUE";
 		Object pst = connection.prepareStatement(sql);
 		Object rs = ((PreparedStatement) pst).executeQuery();
