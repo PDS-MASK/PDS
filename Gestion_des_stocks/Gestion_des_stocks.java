@@ -32,10 +32,11 @@ public class Gestion_des_stocks extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
-	private JTextField txtNom;
-	private JTextField txtCatgorie;
-	private JTextField txtGenre;
-	private JTextField txtDescription;
+	private JTextField txtBoutique;
+	private JTextField txtArticle;
+	private JTextField txtTaille;
+	private JTextField txtCouleur;
+	private JTextField textStock;
 
 	/**
 	 * Launch the application.
@@ -56,7 +57,7 @@ public class Gestion_des_stocks extends JFrame {
 	public void theQuery(String query){
 		Connection connection = null;
 		try {
-			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","ahamdi","");	
+			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","ahamdi","resident4");	
 			Statement stmt = null;
 			stmt = connection.createStatement();
 			ResultSet result = stmt.executeQuery(query);
@@ -99,7 +100,7 @@ public class Gestion_des_stocks extends JFrame {
 	 */
 	public Gestion_des_stocks() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1036, 508);
+		setBounds(100, 100, 1120, 542);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -114,7 +115,7 @@ public class Gestion_des_stocks extends JFrame {
 		JButton btnGestionDesBons = new JButton("Test affichage des produits");
 		btnGestionDesBons.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				theQuery("SELECT * FROM ARTICLE");
+				theQuery("SELECT NOM_ARTICLE FROM ARTICLE INNER JOIN SOUS_ARTICLE ON ARTICLE.ID_ARTICLE = SOUS_ARTICLE.ID_ARTICLE");
 			}
 		});
 		btnGestionDesBons.setBounds(239, 426, 315, 21);
@@ -165,45 +166,55 @@ public class Gestion_des_stocks extends JFrame {
 
 		getContentPane().add(pane);
 		
-		JTextArea textNom = new JTextArea();
-		textNom.setBounds(10, 88, 127, 22);
-		contentPane.add(textNom);
+		JTextArea textBoutique = new JTextArea();
+		textBoutique.setBounds(10, 101, 127, 22);
+		contentPane.add(textBoutique);
 		
-		JTextArea textCategorie = new JTextArea();
-		textCategorie.setBounds(10, 152, 127, 22);
-		contentPane.add(textCategorie);
+		JTextArea textArticle = new JTextArea();
+		textArticle.setBounds(10, 162, 127, 22);
+		contentPane.add(textArticle);
 		
-		JTextArea textGenre = new JTextArea();
-		textGenre.setBounds(10, 225, 127, 22);
-		contentPane.add(textGenre);
+		JTextArea textTaille = new JTextArea();
+		textTaille.setBounds(10, 223, 127, 22);
+		contentPane.add(textTaille);
 		
 		JTextArea textDescription = new JTextArea();
 		textDescription.setBounds(10, 297, 127, 22);
 		contentPane.add(textDescription);
 		
-		txtNom = new JTextField();
-		txtNom.setText("Nom");
-		txtNom.setBounds(10, 67, 127, 19);
-		contentPane.add(txtNom);
-		txtNom.setColumns(10);
+		txtBoutique = new JTextField();
+		txtBoutique.setText("Nom boutique");
+		txtBoutique.setBounds(10, 67, 127, 19);
+		contentPane.add(txtBoutique);
+		txtBoutique.setColumns(10);
 		
-		txtCatgorie = new JTextField();
-		txtCatgorie.setText("Cat\u00E9gorie");
-		txtCatgorie.setColumns(10);
-		txtCatgorie.setBounds(10, 123, 127, 19);
-		contentPane.add(txtCatgorie);
+		txtArticle = new JTextField();
+		txtArticle.setText("Nom article");
+		txtArticle.setColumns(10);
+		txtArticle.setBounds(10, 133, 127, 19);
+		contentPane.add(txtArticle);
 		
-		txtGenre = new JTextField();
-		txtGenre.setText("Genre");
-		txtGenre.setColumns(10);
-		txtGenre.setBounds(10, 196, 127, 19);
-		contentPane.add(txtGenre);
+		txtTaille = new JTextField();
+		txtTaille.setText("Taille");
+		txtTaille.setColumns(10);
+		txtTaille.setBounds(10, 194, 127, 19);
+		contentPane.add(txtTaille);
 		
-		txtDescription = new JTextField();
-		txtDescription.setText("Description");
-		txtDescription.setColumns(10);
-		txtDescription.setBounds(10, 268, 127, 19);
-		contentPane.add(txtDescription);
+		txtCouleur = new JTextField();
+		txtCouleur.setText("Couleur");
+		txtCouleur.setColumns(10);
+		txtCouleur.setBounds(10, 268, 127, 19);
+		contentPane.add(txtCouleur);
+		
+		textStock = new JTextField();
+		textStock.setText("Stock");
+		textStock.setColumns(10);
+		textStock.setBounds(10, 329, 127, 19);
+		contentPane.add(textStock);
+		
+		JTextArea txtStock = new JTextArea();
+		txtStock.setBounds(10, 358, 127, 22);
+		contentPane.add(txtStock);
 		
 //		JButton btnModifierUnArticle = new JButton("Modifier un article");
 //		btnModifierUnArticle.setBounds(10, 413, 201, 21);
@@ -218,11 +229,11 @@ public class Gestion_des_stocks extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
              
-                row[0] = textNom.getText();
-                row[1] = textCategorie.getText();
-                row[2] = textGenre.getText();
+                row[0] = textBoutique.getText();
+                row[1] = textArticle.getText();
+                row[2] = textTaille.getText();
                 row[3] = textDescription.getText();
-                
+          
                 // add row to the model
                // model.addRow(row);
             }
@@ -239,7 +250,7 @@ public class Gestion_des_stocks extends JFrame {
                 if(i >= 0){
                     // remove a row from jtable
                     //model.removeRow(i);
-                	theQuery("DELETE * FROM ARTICLE WHERE ID_ARTICLE="+table.getSelectedColumn());
+                	theQuery("DELETE * FROM SOUS_ARTICLE WHERE ID_ARTICLE="+table.getEditingColumn());
 
                 }
                 else{
@@ -277,8 +288,8 @@ public class Gestion_des_stocks extends JFrame {
 	
   	public void showTableData(){
 		try{
-		Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","ahamdi","");
-		String sql = "Select * from article";
+		Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","ahamdi","resident4");
+		String sql = "SELECT NOM_BOUTIQUE, NOM_ARTICLE, TAILLE, COULEUR, STOCK FROM ARTICLE INNER JOIN SOUS_ARTICLE ON ARTICLE.ID_ARTICLE = SOUS_ARTICLE.ID_ARTICLE INNER JOIN BOUTIQUE ON BOUTIQUE.ID_BOUTIQUE = SOUS_ARTICLE.ID_BOUTIQUE";
 		Object pst = connection.prepareStatement(sql);
 		Object rs = ((PreparedStatement) pst).executeQuery();
 		table.setModel(DbUtils.resultSetToTableModel((ResultSet) rs));
