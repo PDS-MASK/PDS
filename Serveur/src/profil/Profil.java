@@ -92,7 +92,7 @@ public class Profil {
 					ResultSet rset_Person2 = stmt3.executeQuery("select nom_souscategorie from sous_categorie,categorie_personne where SOUS_CATEGORIE.ID_SOUSCATEGORIE = categorie_personne.ID_SOUSCATEGORIE and categorie_personne.ID_PERSONNE ="+id_personne);
 					while(rset_Person2.next()) {
 						System.out.println(rset_Person2.getString(1));
-						text_categorie += " " + rset_Person2.getString(1) + ",\n";
+						text_categorie += " " + rset_Person2.getString(1) + "\n";
 					}
 					l_profil.add(text_profil);
 					l_categorie.add(text_categorie);
@@ -160,7 +160,7 @@ public class Profil {
 					ResultSet rset_Person2 = stmt3.executeQuery("select nom_souscategorie from sous_categorie,categorie_personne where SOUS_CATEGORIE.ID_SOUSCATEGORIE = categorie_personne.ID_SOUSCATEGORIE and categorie_personne.ID_PERSONNE ="+id_personne);
 					while(rset_Person2.next()) {
 						System.out.println(rset_Person2.getString(1));
-						text_categorie += " " + rset_Person2.getString(1) + ",\n";
+						text_categorie += " " + rset_Person2.getString(1) + "\n";
 					}
 					l_profil.add(text_profil);
 					l_categorie.add(text_categorie);
@@ -257,7 +257,7 @@ public class Profil {
 			}
 			for(int i=0; i<tmp_categorie.size();i++) {
 				if (tmp_categorie.get(i).equals("false")) {
-					stmt.executeQuery("insert into categorie_personne values("+this.id_person+",'"+this.catégorie.get(i) +"')");
+					stmt.executeQuery("insert into categorie_personne values("+this.id_person+",'"+this.catégorie.get(i));
 				}
 			}
 			
@@ -286,7 +286,7 @@ public class Profil {
 		      Connection conn = DriverManager.getConnection(url, user, passwd);
 		      System.out.println("Connexion effective !");    
 		      Statement stmt = conn.createStatement();
-				ResultSet rset = stmt.executeQuery("select date_commande from commande,commande_sousarticle where commande.id_commande=commande_sousarticle.id_commande and id_personne ="+ this.id_person);
+				ResultSet rset = stmt.executeQuery("select date_commande from commande where id_personne ="+ this.id_person);
 				int Nbr_Semaine = 0;
 				int Nbr_Mois = 0;
 				int Nbr_Year = 0;
@@ -416,13 +416,11 @@ public class Profil {
 	}
 	
 public static void Action_Show_One(String profil_id) {
-	Action_Update_All();
 	Affiche_Profil_One(Integer.parseInt(profil_id));
 	}
 	
 	
 	public static void Action_Show_All() {
-		Action_Update_All();
 		 Affiche_Profil();
 	}
 	

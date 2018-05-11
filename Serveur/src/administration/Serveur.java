@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import profil.Profil;
-import profil.Test;
 
 public class Serveur {
 	  static Socket sock;
@@ -27,6 +26,8 @@ public class Serveur {
                    fis = new FileInputStream(myFile);
                } catch (FileNotFoundException ex) {
                    // Do exception handling
+            	   ex.printStackTrace();
+            	   
                }
                BufferedInputStream bis = new BufferedInputStream(fis);
 
@@ -40,12 +41,13 @@ public class Serveur {
                    return;
                } catch (IOException ex) {
                    // Do exception handling
+            	   ex.printStackTrace();
                }
            }
 
 	   }
 	    
-		  public static void main (String [] args ) throws IOException, InterruptedException {
+		  public static void main (String [] args ) throws IOException, InterruptedException, SQLException {
 			  if(sv == null ) {
 				  sv = new ServerSocket(9003);
 			  } else if ( sv.isClosed()) {
@@ -63,13 +65,6 @@ public class Serveur {
 			  String action_page = LecteurJSON.Get_Action()[1];
 			  String action_parametre = LecteurJSON.Get_Action()[2];
 			  switch (action_page) {
-			  case "TEST_PROFIL" :
-				  String action_souscategorie = LecteurJSON.Get_Action()[4];
-				  String action_nbr = LecteurJSON.Get_Action()[3];
-
-				  
-
-				  Test.generateur_test(Integer.parseInt(action_parametre), action_souscategorie, Integer.parseInt(action_nbr));
 			  case "PROFIL" :
 				  switch(action_bouton) {
 				  case "SHOW_ONE_PROFIL" :
@@ -99,14 +94,40 @@ public class Serveur {
 					  	break;
 				  }
 			 
-			  case "GESTION EMPLACEMENT" :
-				  switch(action_bouton) {
-				  case"":
+				  case "INDICATEUR" :
+					  switch(action_bouton) {
+					  case"Emplacements_Disponibles":
+						  System.out.println("dispo");
+						  indicateur.Analyse.BoutiquesDispo();
+						  break;
 					  
+					  case"ACHATS_BOUTIQUE":
+						  System.out.println("dispo");
+						  indicateur.Analyse.achatsjour(action_parametre);
+						  break;
+					  case "ACHATS_BOUTIQUE_MOIS":
+						  indicateur.Analyse.achatsmois(action_parametre);
+
+						  break;
+					  case "VISITE_JOUR":
+						  indicateur.Analyse.afficheP(action_parametre);
+						  break;
+					  case "VISITE_ANNEE":
+						  indicateur.Analyse.affichePannee(action_parametre);
+						  break;
+					  case "VISITE_SEMESTRE":
+						  indicateur.Analyse.affichePsemestre(action_parametre);
+						  break;
+					  case "TEST_VISITE_JOUR":
+						  indicateur.Test.testvisitejour(action_parametre);
+						  break;
 				  }
 			  }
+			  System.out.println("envoyer json");
 			  Envoyer_JSON();
+			  System.out.println("envoyer json");
 	          Thread.sleep(4000);
 			//  sv.close();
 		  }
+
 }

@@ -5,11 +5,7 @@ import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,42 +24,18 @@ public class Login {
 
 	/**
 	 * Launch the application.
-	 * @throws IOException 
-	 * @throws UnknownHostException 
 	 */
-	public static void main(String[] args) throws UnknownHostException, IOException {
-		if(args[0].equals("test")) {
-			if(Administration.sock == null) {
-				Administration.sock = new Socket(InetAddress.getLocalHost(),9003);
-			}
-			else if(Administration.sock.isClosed()) {
-				Administration.sock = new Socket(InetAddress.getLocalHost(),9003);
-			}
-			profil.Test.generateur_test(args[1],args[2],args[3]);
-			if(!general.Administration.sock.isClosed()) {
-				general.Administration.sock.close();
-			}
-			if(general.Administration.sock.isClosed()) {
-				general.Administration.sock = new Socket(InetAddress.getLocalHost(),9003);
-
-			}
-			  JSON.Commun.transfert( general.Administration.sock.getInputStream(), new FileOutputStream("json_serveur"), true);
-			  general.Administration.sock.close();
-			  System.out.println(profil.LecteurJSON.Get_Liste_Test());
-		}
-		else {
+	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						Login window = new Login();
-						window.frame.setVisible(true);
-						
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+			public void run() {
+				try {
+					Login window = new Login();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-			});
-		}
+			}
+		});
 	}
 	
 

@@ -83,6 +83,12 @@ public class Administration extends JFrame {
 		contentPane.add(btnGestionDesEmplacements);
 		
 		JButton btnAnalyserLesIndicateurs = new JButton("Analyser les indicateurs");
+		btnAnalyserLesIndicateurs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				indicateur.Indicateur g = new indicateur.Indicateur();
+				g.setVisible(true);
+			}
+		});
 		btnAnalyserLesIndicateurs.setFont(new Font("Berlin Sans FB", Font.PLAIN, 10));
 		btnAnalyserLesIndicateurs.setBounds(89, 141, 256, 21);
 		contentPane.add(btnAnalyserLesIndicateurs);
