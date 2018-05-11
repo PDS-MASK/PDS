@@ -1,1 +1,37 @@
-{"ACHATS": "300.0"}
+{
+   "Liste_CATEGORIE": [
+      " Pull                ,\n",
+      " Pull                ,\n Pantalon            ,\n",
+      "",
+      "",
+      ""
+   ],
+   "Liste_NOM": [
+      "Rousselet           ",
+      "Boudabous           ",
+      "Hamdi               ",
+      "SafSaf              ",
+      "Ben Malek           "
+   ],
+   "Liste_ID": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+   ],
+   "Liste_PRENOM": [
+      "Marie               ",
+      "Khadija             ",
+      "Amine               ",
+      "Sami                ",
+      "Mohammed            "
+   ],
+   "Liste_PROFIL": [
+      " Normal              \n",
+      " Compulsif           \n",
+      " Disparu             \n",
+      " Disparu             \n",
+      " Disparu             \n"
+   ]
+}

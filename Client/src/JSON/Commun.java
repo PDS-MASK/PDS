@@ -7,7 +7,6 @@ public class Commun {
 	public static void transfert(InputStream in, OutputStream out, boolean closeOnExit) throws IOException { 
 		byte buf[] = new byte[1024]; 
 		int n;
-		System.out.println("ECRIT/LIT");
 		while((n=in.read(buf))!=-1) 
 			out.write(buf,0,n); 
 			if (closeOnExit) { 

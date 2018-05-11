@@ -1,18 +1,23 @@
-package administration;
+package profil;
+
+
+import java.util.Scanner;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
-import java.util.Scanner;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class LecteurJSON {
+
 	
-	public static String[] Get_Action() {
+	public static Object[][] Get_Liste() {
 	      // Ouverture du fichier
         FileInputStream fs = null;
         try {
-            fs = new FileInputStream("json.json");
+            fs = new FileInputStream("json_serveur");
         } catch(FileNotFoundException e) {
             System.err.println("Fichier 'json' introuvable");
             System.exit(-1);
@@ -38,33 +43,42 @@ public class LecteurJSON {
         // Création d'un objet JSON
         JSONObject objet = new JSONObject(json);
         System.out.println("Contenu JSON : ");
-        System.out.println(objet.getString("Action_Bouton"));
-        
-        String action_page = objet.getString("Action_Page");
-        String action_bouton = objet.getString("Action_Bouton");
-        String action_parametre = objet.getString("Action_parametre");
+      
+        JSONArray tmp_ID = objet.getJSONArray("Liste_ID");
+        JSONArray tmp_NOM = objet.getJSONArray("Liste_NOM");
+        JSONArray tmp_PRENOM = objet.getJSONArray("Liste_PRENOM");
+        JSONArray tmp_PROFIL = objet.getJSONArray("Liste_PROFIL");
+        JSONArray tmp_CATEGORIE = objet.getJSONArray("Liste_CATEGORIE");
+        Object [][] Liste = new Object[tmp_ID.length()+1][5];
 
-        switch(action_page) {
-        case "" : 
+        for (int i = 0;i<tmp_ID.length();i++) {
+        	Liste[i][0] = tmp_ID.get(i);
+        	Liste[i][1] = tmp_NOM.get(i);
+        	Liste[i][2] = tmp_PRENOM.get(i);
+        	Liste[i][3] = tmp_PROFIL.get(i);
+        	Liste[i][4] = tmp_CATEGORIE.get(i);
+
         	
         }
-        // Affichage à l'écran
-       String[] retour = new String[3];
-       retour[0] = action_bouton;
-       retour[1] = action_page;
-       retour[2] = action_parametre;
-        return retour;
+
+
+
+      
+        
+     
+        return Liste;
     }
 
-	public static String[] Get_Action_Test() {
+	public static String Get_Liste_Test() {
 	      // Ouverture du fichier
       FileInputStream fs = null;
       try {
-          fs = new FileInputStream("json.json");
+          fs = new FileInputStream("json_serveur");
       } catch(FileNotFoundException e) {
           System.err.println("Fichier 'json' introuvable");
           System.exit(-1);
       }
+      String rslt = "";
 
       // Récupération de la chaîne JSON depuis le fichier
       String json = new String();
@@ -86,26 +100,25 @@ public class LecteurJSON {
       // Création d'un objet JSON
       JSONObject objet = new JSONObject(json);
       System.out.println("Contenu JSON : ");
-      System.out.println(objet.getString("Action_Bouton"));
-      
-      String action_page = objet.getString("Action_Page");
-      String action_bouton = objet.getString("Action_Bouton");
-      String action_id = objet.getString("Action_id");
-      String action_nbr = objet.getString("Action_nbr");
-      String action_souscategorie = objet.getString("Action_sous_categorie");
+    
+      JSONArray tmp_ID = objet.getJSONArray("Liste_ID");
+      JSONArray tmp_NOM = objet.getJSONArray("Liste_NOM");
+      JSONArray tmp_PRENOM = objet.getJSONArray("Liste_PRENOM");
+      JSONArray tmp_PROFIL = objet.getJSONArray("Liste_PROFIL");
+      JSONArray tmp_CATEGORIE = objet.getJSONArray("Liste_CATEGORIE");
+      Object [][] Liste = new Object[tmp_ID.length()+1][5];
 
-
-      // Affichage à l'écran
-     String[] retour = new String[5];
-     retour[0] = action_bouton;
-     retour[1] = action_page;
-     retour[2] = action_id;
-     retour[3] = action_nbr;
-     retour[4] = action_souscategorie;
-      return retour;
-  }
+      for (int i = 0;i<tmp_ID.length();i++) {
+    	  rslt += " ID : " +  tmp_ID.get(i) + ", NOM :" + tmp_NOM.get(i) + " PRENOM :" + tmp_PRENOM.get(i) + " PROFIL : " + tmp_PROFIL.get(i) + " CATEGORIE : " + tmp_CATEGORIE.get(i); 
+       	
+      }
 
 
 
     
+      
+   
+      return rslt;
+  }
+
 }
