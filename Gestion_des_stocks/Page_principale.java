@@ -92,13 +92,13 @@ public class Page_principale extends JFrame {
 		btnRetour.setBounds(0, 10, 85, 21);
 		contentPane.add(btnRetour);
 
-		JButton btnAjouterUnArticle = new JButton("Approvisionner le stock");
-		btnAjouterUnArticle.setBounds(10, 390, 201, 21);
-		contentPane.add(btnAjouterUnArticle);
+		JButton btnApproStock = new JButton("Approvisionner le stock");
+		btnApproStock.setBounds(10, 390, 201, 21);
+		contentPane.add(btnApproStock);
 
-		JButton btnSupprimerUnArticle = new JButton("Mise à jour des stocks");
-		btnSupprimerUnArticle.setBounds(10, 436, 201, 21);
-		contentPane.add(btnSupprimerUnArticle);
+		JButton btnMajStock = new JButton("Mise à jour des stocks");
+		btnMajStock.setBounds(10, 436, 201, 21);
+		contentPane.add(btnMajStock);
 
 		table = new JTable();
 		table.setBounds(24, 157, 385, -106);
@@ -172,7 +172,7 @@ public class Page_principale extends JFrame {
 					ResultSet rs2 = sta2.executeQuery(Sql2);
 					rs2.next();
 					String i = rs2.getString("id_boutique");
-					System.out.println("!!!!!!!!!rs : " + i + "!!!!!!!");
+					//System.out.println("!!!!!!!!!rs : " + i + "!!!!!!!");
 					showTableData(i);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -182,36 +182,35 @@ public class Page_principale extends JFrame {
 		});
 
 
-		// create an array of objects to set the row data
-		Object[] row = new Object[4];
 
 		// button add row
-		btnAjouterUnArticle.addActionListener(new ActionListener() {
+		btnApproStock.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-
+				Gestion_des_stocks.Approvisionnement_stock as;
+				try {
+					as = new Gestion_des_stocks.Approvisionnement_stock();
+					as.setVisible(true);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 
 			}
 		});
 
 		// button remove row
-		btnSupprimerUnArticle.addActionListener(new ActionListener() {
+		btnMajStock.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				// i = the index of the selected row
-				int i = table.getSelectedRow();
-				if (i >= 0) {
-					// remove a row from jtable
-					// model.removeRow(i);
-					//theQuery("DELETE * FROM SOUS_ARTICLE WHERE ID_ARTICLE=" + table.getEditingColumn());
+				Gestion_des_stocks.Maj_stock ms = new Gestion_des_stocks.Maj_stock();
+				ms.setVisible(true);
 
-				} else {
-					System.out.println("Delete Error");
-				}
 			}
 		});
 
@@ -240,8 +239,6 @@ public class Page_principale extends JFrame {
 
 	public void showTableData(String s) {
 		try {
-			//Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "ahamdi", "resident4");
-			//String sql = "SELECT NOM_BOUTIQUE, NOM_ARTICLE, TAILLE, COULEUR, STOCK FROM ARTICLE INNER JOIN SOUS_ARTICLE ON ARTICLE.ID_ARTICLE = SOUS_ARTICLE.ID_ARTICLE INNER JOIN BOUTIQUE ON BOUTIQUE.ID_BOUTIQUE = SOUS_ARTICLE.ID_BOUTIQUE";
 			String sql = "SELECT NOM_ARTICLE, CATEGORIE, QUANTITE FROM ARTICLE WHERE ARTICLE.ID_BOUTIQUE = " + s;
 			Object pst = con.prepareStatement(sql);
 			Object rs = ((PreparedStatement) pst).executeQuery();

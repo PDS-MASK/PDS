@@ -1,23 +1,28 @@
 package Gestion_des_stocks;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
-import javax.swing.JButton;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.awt.event.ActionEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import general.Administration;
+import javax.swing.JFormattedTextField;
 
 public class Approvisionnement_stock extends JFrame {
 
@@ -26,6 +31,7 @@ public class Approvisionnement_stock extends JFrame {
 	private JTextField txtCategorie;
 	private JTextField txtQuantit;
 	Connection con = connect();
+	private JTextField txtCommentaire;
 
 	/**
 	 * Launch the application.
@@ -52,11 +58,12 @@ public class Approvisionnement_stock extends JFrame {
 		/*retourne un object con de type Connection*/
 		return con;
 	}
-	
+
 	/**
 	 * Create the frame.
+	 * @throws SQLException 
 	 */
-	public Approvisionnement_stock() {
+	public Approvisionnement_stock() throws SQLException {
 		setTitle("Approvisionnement du stock");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 579, 407);
@@ -64,50 +71,113 @@ public class Approvisionnement_stock extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		txtArticle = new JTextField();
 		txtArticle.setText("Article");
 		txtArticle.setBounds(176, 59, 123, 26);
 		contentPane.add(txtArticle);
 		txtArticle.setColumns(10);
-		
+
 		JTextArea textArticle = new JTextArea();
 		textArticle.setBounds(176, 87, 123, 22);
 		contentPane.add(textArticle);
-		
+
 		txtCategorie = new JTextField();
 		txtCategorie.setText("Categorie");
 		txtCategorie.setColumns(10);
 		txtCategorie.setBounds(176, 125, 123, 26);
 		contentPane.add(txtCategorie);
-		
+
 		JTextArea textCategorie = new JTextArea();
 		textCategorie.setBounds(176, 152, 123, 22);
 		contentPane.add(textCategorie);
-		
+
 		txtQuantit = new JTextField();
 		txtQuantit.setText("Quantit\u00E9");
 		txtQuantit.setColumns(10);
 		txtQuantit.setBounds(176, 188, 123, 26);
 		contentPane.add(txtQuantit);
-		
+
 		JTextArea textQuantite = new JTextArea();
 		textQuantite.setBounds(176, 220, 123, 22);
 		contentPane.add(textQuantite);
+
+		JButton btnRetour = new JButton("Retour");
+		btnRetour.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Administration a = new Administration();
+				a.setVisible(true);
+			}
+		});
+		btnRetour.setBounds(0, 10, 85, 21);
+		contentPane.add(btnRetour);
+
+		String nomBoutique;
+		JComboBox BoutiqueComboBox = new JComboBox();
+		BoutiqueComboBox.setBounds(10, 99, 122, 26);
+		contentPane.add(BoutiqueComboBox);
+		Statement sta = con.createStatement();
+		String Sql = "select nom_boutique from boutique";
+		ResultSet rs = sta.executeQuery(Sql);
+		while (rs.next()) {
+			nomBoutique = rs.getString("nom_boutique");
+			BoutiqueComboBox.addItem(nomBoutique);
+		}
 		
+		txtCommentaire = new JTextField();
+		txtCommentaire.setText("Commentaire");
+		txtCommentaire.setColumns(10);
+		txtCommentaire.setBounds(334, 45, 123, 26);
+		contentPane.add(txtCommentaire);
+		
+		JTextArea textCommentaire = new JTextArea();
+		textCommentaire.setBounds(334, 87, 164, 87);
+		contentPane.add(textCommentaire);
+
 		JButton btnValider = new JButton("Valider");
 		btnValider.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					String nomArticle = txtArticle.getText();
-					String categorieArticle = txtCategorie.getText();
-					String quantiteArticle = txtQuantit.getText();
-					String idBoutique = s;
-					Statement sta2 = con.createStatement();
-					String Sql2 = "insert into article (id_article, nom_article,categorie,quantite,id_boutique) values ((select max(ID_article)+1 from ARTICLE),"+ nomArticle + ',' + categorieArticle + ',' + quantiteArticle + ',' + idBoutique + ')';
-					ResultSet rs2 = sta2.executeQuery(Sql2);
-					rs2.next();
+					Date actuelle = new Date();
+					DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+					String dat = dateFormat.format(actuelle);
+					String nomArticle = textArticle.getText();
+					String categorieArticle = textCategorie.getText();
+					String quantiteArticle = textQuantite.getText();
+					String commentaire = textCommentaire.getText();
+					String boutiqueSelectionnee = BoutiqueComboBox.getSelectedItem().toString();
+					//System.out.println(boutiqueSelectionnee);
 					
+					Statement staid = con.createStatement();
+					String Sql2 = "select * from boutique where boutique.nom_boutique ='" + boutiqueSelectionnee + "'";
+					ResultSet rs2 = staid.executeQuery(Sql2);
+					rs2.next();
+					String id_boutique = rs2.getString("id_boutique");
+					Statement sta2 = con.createStatement();
+					//System.out.println(id_boutique+nomArticle+categorieArticle+quantiteArticle);
+
+					String Sql3 = "insert into article (id_article, nom_article,categorie,quantite,id_boutique) values ((select max(ID_article)+1 from ARTICLE),"+ "'" + nomArticle + "'" + ',' + "'" + categorieArticle + "'" + ',' + quantiteArticle + ',' + id_boutique + ')';
+					//System.out.println(Sql3);
+					ResultSet rs3 = sta2.executeQuery(Sql3);
+					rs3.next();
+					
+					Statement sta3 = con.createStatement();
+					//System.out.println("nom de l'article" + nomArticle);
+					Statement staid_article = con.createStatement();
+					String Sqlid_article = "select * from article where article.nom_article ='" + nomArticle + "'";
+					ResultSet rs4 = staid_article.executeQuery(Sqlid_article);
+					//System.out.println(Sqlid_article);
+					rs4.next();
+					String id_article = rs4.getString("id_article");
+					//System.out.println(id_article);
+
+
+					String Sql5 = "insert into historique (id_historique, type_action, date_action, quantite_action, commentaire, id_article, id_boutique) values ((select max(ID_boutique)+1 from BOUTIQUE)," + "'" + "Approvisionnement" + "'" + "," + "'" + dat+ "'"+ ',' + quantiteArticle + ',' + "'" + commentaire+ "'" + "," + id_article + "," + id_boutique + ')' ;
+					System.out.println(Sql5);
+					Statement sta5 = con.createStatement();
+					ResultSet rs5 = sta5.executeQuery(Sql5);
+					rs5.next();
+
 				} catch (SQLException ee) {
 					// TODO Auto-generated catch block
 					ee.printStackTrace();
@@ -116,5 +186,9 @@ public class Approvisionnement_stock extends JFrame {
 		});
 		btnValider.setBounds(176, 258, 115, 29);
 		contentPane.add(btnValider);
+		
+	
+		
+		
 	}
 }
