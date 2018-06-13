@@ -124,6 +124,18 @@ public class Approvisionnement_stock extends JFrame {
 			BoutiqueComboBox.addItem(nomBoutique);
 		}
 		
+		String nomFournisseur;
+		JComboBox FournisseurcomboBox = new JComboBox();
+		FournisseurcomboBox.setBounds(10, 149, 122, 26);
+		contentPane.add(FournisseurcomboBox);
+		Statement stab = con.createStatement();
+		String Sqlb = "select nom_fournisseur from fournisseur";
+		ResultSet rsb = stab.executeQuery(Sqlb);
+		while (rsb.next()) {
+			nomFournisseur = rsb.getString("nom_fournisseur");
+			FournisseurcomboBox.addItem(nomFournisseur);
+		}
+		
 		txtCommentaire = new JTextField();
 		txtCommentaire.setText("Commentaire");
 		txtCommentaire.setColumns(10);
@@ -146,6 +158,7 @@ public class Approvisionnement_stock extends JFrame {
 					String quantiteArticle = textQuantite.getText();
 					String commentaire = textCommentaire.getText();
 					String boutiqueSelectionnee = BoutiqueComboBox.getSelectedItem().toString();
+					String fournisseurSelectionnee = FournisseurcomboBox.getSelectedItem().toString();
 					//System.out.println(boutiqueSelectionnee);
 					
 					Statement staid = con.createStatement();
@@ -154,6 +167,13 @@ public class Approvisionnement_stock extends JFrame {
 					rs2.next();
 					String id_boutique = rs2.getString("id_boutique");
 					Statement sta2 = con.createStatement();
+					//System.out.println(id_boutique+nomArticle+categorieArticle+quantiteArticle);
+					
+					Statement stafour = con.createStatement();
+					String Sqlfour = "select * from fournisseur where fournisseur.nom_fournisseur ='" + fournisseurSelectionnee + "'";
+					ResultSet rsfour = stafour.executeQuery(Sqlfour);
+					rsfour.next();
+					String id_four = rsfour.getString("id_fournisseur");
 					//System.out.println(id_boutique+nomArticle+categorieArticle+quantiteArticle);
 
 					String Sql3 = "insert into article (id_article, nom_article,categorie,quantite,id_boutique) values ((select max(ID_article)+1 from ARTICLE),"+ "'" + nomArticle + "'" + ',' + "'" + categorieArticle + "'" + ',' + quantiteArticle + ',' + id_boutique + ')';
@@ -172,7 +192,7 @@ public class Approvisionnement_stock extends JFrame {
 					//System.out.println(id_article);
 
 
-					String Sql5 = "insert into historique (id_historique, type_action, date_action, quantite_action, commentaire, id_article, id_boutique) values ((select max(ID_boutique)+1 from BOUTIQUE)," + "'" + "Approvisionnement" + "'" + "," + "'" + dat+ "'"+ ',' + quantiteArticle + ',' + "'" + commentaire+ "'" + "," + id_article + "," + id_boutique + ')' ;
+					String Sql5 = "insert into historique (id_historique, type_action, date_action, quantite_action, commentaire, id_article, id_boutique, id_fournisseur) values ((select max(ID_boutique)+1 from BOUTIQUE)," + "'" + "Approvisionnement" + "'" + "," + "'" + dat+ "'"+ ',' + quantiteArticle + ',' + "'" + commentaire+ "'" + "," + id_article + "," + id_boutique + "," + id_four + ')' ;
 					System.out.println(Sql5);
 					Statement sta5 = con.createStatement();
 					ResultSet rs5 = sta5.executeQuery(Sql5);
@@ -186,6 +206,8 @@ public class Approvisionnement_stock extends JFrame {
 		});
 		btnValider.setBounds(176, 258, 115, 29);
 		contentPane.add(btnValider);
+		
+	
 		
 	
 		

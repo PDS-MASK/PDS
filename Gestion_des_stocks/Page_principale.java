@@ -126,16 +126,6 @@ public class Page_principale extends JFrame {
 		txtBoutique.setBounds(10, 64, 122, 19);
 		contentPane.add(txtBoutique);
 
-		JButton btnNewButton = new JButton("Espace fournisseurs");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Gestion_des_stocks.Espace_fournisseur ef = new Gestion_des_stocks.Espace_fournisseur();
-				ef.setVisible(true);
-			}
-		});
-		btnNewButton.setBounds(729, 390, 182, 29);
-		contentPane.add(btnNewButton);
-
 		JButton btnSuiviDesActivits = new JButton("Suivi des activit\u00E9s");
 		btnSuiviDesActivits.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
