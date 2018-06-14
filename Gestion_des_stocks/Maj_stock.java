@@ -154,20 +154,22 @@ public class Maj_stock extends JFrame {
 					
 					int newQuantite = Integer.parseInt(quantite);
 					String Sql5;
+					String Sqlupdate;
 					
 					if (qte_prec > newQuantite) {
 						Sql5 = "insert into historique (id_historique, type_action, date_action, quantite_action, ancienne_valeur, commentaire, id_article, id_boutique, id_fournisseur) values ((select max(ID_historique)+1 from historique)," + "'" + "Vente" + "'" + "," + "'" + dat+ "'"+ ',' + quantite + ',' + qte_prec + ',' + "'" + commentaire+ "'" + "," + id_article + "," + id_boutique + "," + "3" + ')' ;
-						
 					} else if (qte_prec < newQuantite) {
 						Sql5 = "insert into historique (id_historique, type_action, date_action, quantite_action, ancienne_valeur,commentaire, id_article, id_boutique, id_fournisseur) values ((select max(ID_historique)+1 from historique)," + "'" + "Approvisionnement" + "'" + "," + "'" + dat+ "'"+ ',' + quantite + ',' + qte_prec +  ',' + "'" + commentaire+ "'" + "," + id_article + "," + id_boutique + "," + "3" + ')' ;
 					} else {
 						Sql5 = "insert into historique (id_historique, type_action, date_action, quantite_action, ancienne_valeur,commentaire, id_article, id_boutique, id_fournisseur) values ((select max(ID_historique)+1 from historique)," + "'" + "Roulement" + "'" + "," + "'" + dat+ "'"+ ',' + quantite + ',' + qte_prec + ','  + "'" + commentaire+ "'" + "," + id_article + "," + id_boutique + "," + "3" + ')' ;
+						
 					}
-					
+					Sqlupdate = "UPDATE ARTICLE SET QUANTITE =" + quantite + "WHERE ARTICLE.ID_ARTICLE =" + id_article + "AND ARTICLE.ID_BOUTIQUE = " + id_boutique;
+
 					System.out.println(Sql5);
 					Statement staupdate = con2.createStatement();
 					//requête à valider
-					String Sqlupdate = "UPDATE ARTICLE SET QUANTITE =" + quantite + "WHERE ARTICLE.ID_ARTICLE =" + id_article + "AND ARTICLE.ID_BOUTIQUE = " + id_boutique;
+					
 					ResultSet rsupdate = staupdate.executeQuery(Sqlupdate);
 					rsupdate.next();
 
