@@ -85,6 +85,7 @@ public class Page_principale extends JFrame {
 		JButton btnRetour = new JButton("Retour");
 		btnRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
 				Administration a = new Administration();
 				a.setVisible(true);
 			}
@@ -129,8 +130,14 @@ public class Page_principale extends JFrame {
 		JButton btnSuiviDesActivits = new JButton("Suivi des activit\u00E9s");
 		btnSuiviDesActivits.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Gestion_des_stocks.Suivi s = new Gestion_des_stocks.Suivi();
-				s.setVisible(true);
+				Gestion_des_stocks.Suivi s;
+				try {
+					s = new Gestion_des_stocks.Suivi();
+					s.setVisible(true);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnSuiviDesActivits.setBounds(724, 432, 187, 29);
@@ -162,7 +169,6 @@ public class Page_principale extends JFrame {
 					ResultSet rs2 = sta2.executeQuery(Sql2);
 					rs2.next();
 					String i = rs2.getString("id_boutique");
-					//System.out.println("!!!!!!!!!rs : " + i + "!!!!!!!");
 					showTableData(i);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -198,8 +204,14 @@ public class Page_principale extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				Gestion_des_stocks.Maj_stock ms = new Gestion_des_stocks.Maj_stock();
-				ms.setVisible(true);
+				Gestion_des_stocks.Maj_stock ms;
+				try {
+					ms = new Gestion_des_stocks.Maj_stock();
+					ms.setVisible(true);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 			}
 		});
@@ -273,7 +285,7 @@ public class Page_principale extends JFrame {
 			stat.setInt(1, id_article);
 			int ex = stat.executeUpdate();
 			if (ex != 0) {
-				JOptionPane.showMessageDialog(null, "Supression Article N°:" + id_article + "\nDe la table Commande");
+				JOptionPane.showMessageDialog(null, "Suppression Article N°:" + id_article + "\nDe la table Commande");
 			} else {
 				JOptionPane.showMessageDialog(null, "Erreur de traitement");
 			}

@@ -33,6 +33,7 @@ public class Approvisionnement_stock extends JFrame {
 	private JTextField txtQuantit;
 	Connection con = connect();
 	private JTextField txtCommentaire;
+	private static Approvisionnement_stock frame;
 
 	/**
 	 * Launch the application.
@@ -41,7 +42,7 @@ public class Approvisionnement_stock extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Approvisionnement_stock frame = new Approvisionnement_stock();
+					frame = new Approvisionnement_stock();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -191,7 +192,7 @@ public class Approvisionnement_stock extends JFrame {
 					//System.out.println(id_article);
 
 
-					String Sql5 = "insert into historique (id_historique, type_action, date_action, quantite_action, commentaire, id_article, id_boutique, id_fournisseur) values ((select max(ID_historique)+1 from historique)," + "'" + "Approvisionnement" + "'" + "," + "'" + dat+ "'"+ ',' + quantiteArticle + ',' + "'" + commentaire+ "'" + "," + id_article + "," + id_boutique + "," + id_four + ')' ;
+					String Sql5 = "insert into historique (id_historique, type_action, date_action, quantite_action, ancienne_valeur, commentaire, id_article, id_boutique, id_fournisseur) values ((select max(ID_historique)+1 from historique)," + "'" + "Approvisionnement" + "'" + "," + "'" + dat+ "'"+ ',' + quantiteArticle + ',' + "0" + ',' + "'" + commentaire+ "'" + "," + id_article + "," + id_boutique + "," + id_four + ')' ;
 					System.out.println(Sql5);
 					Statement sta5 = con.createStatement();
 					ResultSet rs5 = sta5.executeQuery(Sql5);
@@ -199,7 +200,8 @@ public class Approvisionnement_stock extends JFrame {
 					setVisible(false);
 				} catch (SQLException ee) {
 					// TODO Auto-generated catch block
-					ee.printStackTrace();
+					JOptionPane.showMessageDialog(frame, "erreur de saisie");
+					//ee.printStackTrace();
 				}
 			}
 		});

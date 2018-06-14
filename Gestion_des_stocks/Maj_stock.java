@@ -15,6 +15,7 @@ import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -28,6 +29,7 @@ public class Maj_stock extends JFrame {
 	private Connection con2 = connect();
 	private JTextField textFieldarticle;
 	private JTextField textFieldcommentaire;
+	private static Maj_stock frame;
 
 	/**
 	 * Launch the application.
@@ -36,7 +38,7 @@ public class Maj_stock extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Maj_stock frame = new Maj_stock();
+					frame = new Maj_stock();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -154,15 +156,15 @@ public class Maj_stock extends JFrame {
 					String Sql5;
 					
 					if (qte_prec > newQuantite) {
-						Sql5 = "insert into historique (id_historique, type_action, date_action, quantite_action, commentaire, id_article, id_boutique, id_fournisseur) values ((select max(ID_historique)+1 from historique)," + "'" + "Vente" + "'" + "," + "'" + dat+ "'"+ ',' + quantite + ',' + "'" + commentaire+ "'" + "," + id_article + "," + id_boutique + "," + "3" + ')' ;
+						Sql5 = "insert into historique (id_historique, type_action, date_action, quantite_action, ancienne_valeur, commentaire, id_article, id_boutique, id_fournisseur) values ((select max(ID_historique)+1 from historique)," + "'" + "Vente" + "'" + "," + "'" + dat+ "'"+ ',' + quantite + ',' + qte_prec + ',' + "'" + commentaire+ "'" + "," + id_article + "," + id_boutique + "," + "3" + ')' ;
 						
 					} else if (qte_prec < newQuantite) {
-						Sql5 = "insert into historique (id_historique, type_action, date_action, quantite_action, commentaire, id_article, id_boutique, id_fournisseur) values ((select max(ID_historique)+1 from historique)," + "'" + "Approvisionnement" + "'" + "," + "'" + dat+ "'"+ ',' + quantite + ',' + "'" + commentaire+ "'" + "," + id_article + "," + id_boutique + "," + "3" + ')' ;
+						Sql5 = "insert into historique (id_historique, type_action, date_action, quantite_action, ancienne_valeur,commentaire, id_article, id_boutique, id_fournisseur) values ((select max(ID_historique)+1 from historique)," + "'" + "Approvisionnement" + "'" + "," + "'" + dat+ "'"+ ',' + quantite + ',' + qte_prec +  ',' + "'" + commentaire+ "'" + "," + id_article + "," + id_boutique + "," + "3" + ')' ;
 					} else {
-						Sql5 = "insert into historique (id_historique, type_action, date_action, quantite_action, commentaire, id_article, id_boutique, id_fournisseur) values ((select max(ID_historique)+1 from historique)," + "'" + "Roulement" + "'" + "," + "'" + dat+ "'"+ ',' + quantite + ',' + "'" + commentaire+ "'" + "," + id_article + "," + id_boutique + "," + "3" + ')' ;
+						Sql5 = "insert into historique (id_historique, type_action, date_action, quantite_action, ancienne_valeur,commentaire, id_article, id_boutique, id_fournisseur) values ((select max(ID_historique)+1 from historique)," + "'" + "Roulement" + "'" + "," + "'" + dat+ "'"+ ',' + quantite + ',' + qte_prec + ','  + "'" + commentaire+ "'" + "," + id_article + "," + id_boutique + "," + "3" + ')' ;
 					}
 					
-
+					System.out.println(Sql5);
 					Statement staupdate = con2.createStatement();
 					//requête à valider
 					String Sqlupdate = "UPDATE ARTICLE SET QUANTITE =" + quantite + "WHERE ARTICLE.ID_ARTICLE =" + id_article + "AND ARTICLE.ID_BOUTIQUE = " + id_boutique;
@@ -176,8 +178,9 @@ public class Maj_stock extends JFrame {
 					ResultSet rs5 = sta5.executeQuery(Sql5);
 					rs5.next();
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(frame, "erreur de saisie");
 					e1.printStackTrace();
+					
 				}
 			}
 		});
