@@ -23,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 
 import general.Administration;
 import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 
 public class Approvisionnement_stock extends JFrame {
 
@@ -105,8 +106,7 @@ public class Approvisionnement_stock extends JFrame {
 		JButton btnRetour = new JButton("Retour");
 		btnRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Administration a = new Administration();
-				a.setVisible(true);
+				setVisible(false);
 			}
 		});
 		btnRetour.setBounds(0, 10, 85, 21);
@@ -126,7 +126,7 @@ public class Approvisionnement_stock extends JFrame {
 		
 		String nomFournisseur;
 		JComboBox FournisseurcomboBox = new JComboBox();
-		FournisseurcomboBox.setBounds(10, 149, 122, 26);
+		FournisseurcomboBox.setBounds(10, 188, 122, 26);
 		contentPane.add(FournisseurcomboBox);
 		Statement stab = con.createStatement();
 		String Sqlb = "select nom_fournisseur from fournisseur";
@@ -160,7 +160,6 @@ public class Approvisionnement_stock extends JFrame {
 					String boutiqueSelectionnee = BoutiqueComboBox.getSelectedItem().toString();
 					String fournisseurSelectionnee = FournisseurcomboBox.getSelectedItem().toString();
 					//System.out.println(boutiqueSelectionnee);
-					
 					Statement staid = con.createStatement();
 					String Sql2 = "select * from boutique where boutique.nom_boutique ='" + boutiqueSelectionnee + "'";
 					ResultSet rs2 = staid.executeQuery(Sql2);
@@ -192,12 +191,12 @@ public class Approvisionnement_stock extends JFrame {
 					//System.out.println(id_article);
 
 
-					String Sql5 = "insert into historique (id_historique, type_action, date_action, quantite_action, commentaire, id_article, id_boutique, id_fournisseur) values ((select max(ID_boutique)+1 from BOUTIQUE)," + "'" + "Approvisionnement" + "'" + "," + "'" + dat+ "'"+ ',' + quantiteArticle + ',' + "'" + commentaire+ "'" + "," + id_article + "," + id_boutique + "," + id_four + ')' ;
+					String Sql5 = "insert into historique (id_historique, type_action, date_action, quantite_action, commentaire, id_article, id_boutique, id_fournisseur) values ((select max(ID_historique)+1 from historique)," + "'" + "Approvisionnement" + "'" + "," + "'" + dat+ "'"+ ',' + quantiteArticle + ',' + "'" + commentaire+ "'" + "," + id_article + "," + id_boutique + "," + id_four + ')' ;
 					System.out.println(Sql5);
 					Statement sta5 = con.createStatement();
 					ResultSet rs5 = sta5.executeQuery(Sql5);
 					rs5.next();
-
+					setVisible(false);
 				} catch (SQLException ee) {
 					// TODO Auto-generated catch block
 					ee.printStackTrace();
@@ -206,6 +205,14 @@ public class Approvisionnement_stock extends JFrame {
 		});
 		btnValider.setBounds(176, 258, 115, 29);
 		contentPane.add(btnValider);
+		
+		JLabel lblFournisseur = new JLabel("Fournisseur");
+		lblFournisseur.setBounds(16, 152, 116, 20);
+		contentPane.add(lblFournisseur);
+		
+		JLabel lblBoutique = new JLabel("Boutique");
+		lblBoutique.setBounds(10, 62, 122, 20);
+		contentPane.add(lblBoutique);
 		
 	
 		
