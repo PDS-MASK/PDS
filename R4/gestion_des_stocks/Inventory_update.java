@@ -22,10 +22,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import server.PoolConnexion;
+
 public class Inventory_update extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField qteTextField;
+	public PoolConnexion pool = new PoolConnexion();
 	private Connection con2 = connect();
 	private JTextField textFieldarticle;
 	private JTextField textFieldcommentaire;
@@ -193,7 +196,7 @@ public class Inventory_update extends JFrame {
 
 	public Connection connect() {
 		try {
-			con2 = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "ahamdi", "pds123");
+			con2 = pool.getConnection();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erreur de connection a la base de donnees :" + e);
 		}

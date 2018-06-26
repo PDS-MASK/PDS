@@ -58,6 +58,21 @@ public class Home extends JFrame {
 				try {
 					Home frame1 = new Home();
 					frame1.setVisible(true);
+					
+					try {
+						String ServerName = "localhost";
+						int ServerPort = 9999;
+						socket = new Socket(InetAddress.getByName(ServerName), ServerPort);
+						Home.setOut(new PrintWriter(new OutputStreamWriter(Home.socket.getOutputStream()),true));
+						Home.setIn(new BufferedReader(new InputStreamReader(Home.socket.getInputStream())));
+
+					} catch (UnknownHostException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -81,20 +96,7 @@ public class Home extends JFrame {
 	 */
 	public Home() throws SQLException {
 
-		try {
-			String ServerName = "localhost";
-			int ServerPort = 9999;
-			socket = new Socket(InetAddress.getByName(ServerName), ServerPort);
-			Home.setOut(new PrintWriter(new OutputStreamWriter(Home.socket.getOutputStream()),true));
-			Home.setIn(new BufferedReader(new InputStreamReader(Home.socket.getInputStream())));
-
-		} catch (UnknownHostException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1120, 542);
 		contentPane = new JPanel();
