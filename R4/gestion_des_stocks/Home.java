@@ -5,6 +5,14 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -25,12 +33,17 @@ import javax.swing.border.EmptyBorder;
 
 import general.Administration;
 import net.proteanit.sql.DbUtils;
+import server.PoolConnexion;
 
 public class Home extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
 	private JTextField txtBoutique;
+	private static Socket socket;
+	private static PrintWriter out ; // to send message to the client 
+	private static BufferedReader in ; // to receive message from the client
+	public PoolConnexion pool = new PoolConnexion();
 	Connection con = connect();
 	ResultSet rs;
 	PreparedStatement stat;
@@ -54,7 +67,7 @@ public class Home extends JFrame {
 
 	public Connection connect() {
 		try {
-			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "ahamdi", "pds123");
+			con = pool.getConnection();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erreur de connection a la base de donnees :" + e);
 		}
@@ -67,6 +80,21 @@ public class Home extends JFrame {
 	 * @throws SQLException 
 	 */
 	public Home() throws SQLException {
+
+		try {
+			String ServerName = "localhost";
+			int ServerPort = 9999;
+			socket = new Socket(InetAddress.getByName(ServerName), ServerPort);
+			Home.setOut(new PrintWriter(new OutputStreamWriter(Home.socket.getOutputStream()),true));
+			Home.setIn(new BufferedReader(new InputStreamReader(Home.socket.getInputStream())));
+
+		} catch (UnknownHostException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1120, 542);
 		contentPane = new JPanel();
@@ -169,6 +197,7 @@ public class Home extends JFrame {
 					ResultSet rs2 = sta2.executeQuery(Sql2);
 					rs2.next();
 					String i = rs2.getString("id_boutique");
+					//J'AFFICHE TOUT LE STOCK DE LA BOUTIQUE QUI A L'ID QUE JAI RECUP PRECEDEMMENT
 					showTableData(i);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -193,7 +222,7 @@ public class Home extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
+
 
 			}
 		});
@@ -237,6 +266,14 @@ public class Home extends JFrame {
 
 		}
 
+	}
+
+	public static void setIn(BufferedReader in) {
+		Home.in = in;
+	}
+
+	public static void setOut(PrintWriter out) {
+		Home.out = out;
 	}
 
 	public void showTableData(String s) {
