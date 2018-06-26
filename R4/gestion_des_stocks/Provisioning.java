@@ -22,6 +22,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import general.Administration;
+import server.PoolConnexion;
+
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 
@@ -31,7 +33,8 @@ public class Provisioning extends JFrame {
 	private JTextField txtArticle;
 	private JTextField txtCategorie;
 	private JTextField txtQuantit;
-	Connection con = connect();
+	public PoolConnexion pool = new PoolConnexion();
+	private Connection con2 = connect();
 	private JTextField txtCommentaire;
 	private static Provisioning frame;
 
@@ -53,12 +56,12 @@ public class Provisioning extends JFrame {
 
 	public Connection connect() {
 		try {
-			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "ahamdi", "pds123");
+			con2 = pool.getConnection();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erreur de connection a la base de donnees :" + e);
 		}
 		/*retourne un object con de type Connection*/
-		return con;
+		return con2;
 	}
 
 	/**
@@ -117,7 +120,7 @@ public class Provisioning extends JFrame {
 		JComboBox BoutiqueComboBox = new JComboBox();
 		BoutiqueComboBox.setBounds(10, 99, 122, 26);
 		contentPane.add(BoutiqueComboBox);
-		Statement sta = con.createStatement();
+		Statement sta = con2.createStatement();
 		String Sql = "select nom_boutique from boutique";
 		ResultSet rs = sta.executeQuery(Sql);
 		while (rs.next()) {
@@ -129,7 +132,7 @@ public class Provisioning extends JFrame {
 		JComboBox FournisseurcomboBox = new JComboBox();
 		FournisseurcomboBox.setBounds(10, 188, 122, 26);
 		contentPane.add(FournisseurcomboBox);
-		Statement stab = con.createStatement();
+		Statement stab = con2.createStatement();
 		String Sqlb = "select nom_fournisseur from fournisseur";
 		ResultSet rsb = stab.executeQuery(Sqlb);
 		while (rsb.next()) {
@@ -161,15 +164,15 @@ public class Provisioning extends JFrame {
 					String boutiqueSelectionnee = BoutiqueComboBox.getSelectedItem().toString();
 					String fournisseurSelectionnee = FournisseurcomboBox.getSelectedItem().toString();
 					//System.out.println(boutiqueSelectionnee);
-					Statement staid = con.createStatement();
+					Statement staid = con2.createStatement();
 					String Sql2 = "select * from boutique where boutique.nom_boutique ='" + boutiqueSelectionnee + "'";
 					ResultSet rs2 = staid.executeQuery(Sql2);
 					rs2.next();
 					String id_boutique = rs2.getString("id_boutique");
-					Statement sta2 = con.createStatement();
+					Statement sta2 = con2.createStatement();
 					//System.out.println(id_boutique+nomArticle+categorieArticle+quantiteArticle);
 					
-					Statement stafour = con.createStatement();
+					Statement stafour = con2.createStatement();
 					String Sqlfour = "select * from fournisseur where fournisseur.nom_fournisseur ='" + fournisseurSelectionnee + "'";
 					ResultSet rsfour = stafour.executeQuery(Sqlfour);
 					rsfour.next();
@@ -181,9 +184,9 @@ public class Provisioning extends JFrame {
 					ResultSet rs3 = sta2.executeQuery(Sql3);
 					rs3.next();
 					
-					Statement sta3 = con.createStatement();
+					Statement sta3 = con2.createStatement();
 					//System.out.println("nom de l'article" + nomArticle);
-					Statement staid_article = con.createStatement();
+					Statement staid_article = con2.createStatement();
 					String Sqlid_article = "select * from article where article.nom_article ='" + nomArticle + "'";
 					ResultSet rs4 = staid_article.executeQuery(Sqlid_article);
 					//System.out.println(Sqlid_article);
@@ -194,7 +197,7 @@ public class Provisioning extends JFrame {
 
 					String Sql5 = "insert into historique (id_historique, type_action, date_action, quantite_action, ancienne_valeur, commentaire, id_article, id_boutique, id_fournisseur) values ((select max(ID_historique)+1 from historique)," + "'" + "Approvisionnement" + "'" + "," + "'" + dat+ "'"+ ',' + quantiteArticle + ',' + "0" + ',' + "'" + commentaire+ "'" + "," + id_article + "," + id_boutique + "," + id_four + ')' ;
 					System.out.println(Sql5);
-					Statement sta5 = con.createStatement();
+					Statement sta5 = con2.createStatement();
 					ResultSet rs5 = sta5.executeQuery(Sql5);
 					rs5.next();
 					setVisible(false);

@@ -33,6 +33,7 @@ public class Inventory_update extends JFrame {
 	private JTextField textFieldarticle;
 	private JTextField textFieldcommentaire;
 	private static Inventory_update frame;
+	
 
 	/**
 	 * Launch the application.
