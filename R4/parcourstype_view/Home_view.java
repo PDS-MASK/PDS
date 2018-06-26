@@ -28,12 +28,14 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import server.ClientProcessing;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 
 public class Home_view {
 
 	private static JFrame frmPlateformeDesParcours;
-	private JTextField txtBienvenue;
-	private JTextField txtV;
 	private static JTable table;
 	private static Socket socket;
 	private static PrintWriter out ; // to send message to the client 
@@ -62,6 +64,29 @@ public class Home_view {
 					window.frmPlateformeDesParcours.setVisible(true);
 					Personne p = new Personne();
 					p.showTableData(table);
+					
+					JPanel panel = new JPanel();
+					panel.setBackground(UIManager.getColor("activeCaption"));
+					panel.setBounds(0, 0, 258, 679);
+					frmPlateformeDesParcours.getContentPane().add(panel);
+					panel.setLayout(null);
+					
+					JLabel lblPlateformeDesParcourstypes = new JLabel("Plateforme des parcours-types");
+					lblPlateformeDesParcourstypes.setForeground(SystemColor.inactiveCaptionBorder);
+					lblPlateformeDesParcourstypes.setFont(new Font("Segoe UI", Font.BOLD, 15));
+					lblPlateformeDesParcourstypes.setBounds(12, 262, 234, 30);
+					lblPlateformeDesParcourstypes.setVerticalAlignment(SwingConstants.TOP);
+					panel.add(lblPlateformeDesParcourstypes);
+					
+					JLabel lblNewLabel = new JLabel("");
+					lblNewLabel.setIcon(new ImageIcon("C:\\Users\\BEN MALEK Mohamed\\Downloads\\Mask_Logo_2.png"));
+					lblNewLabel.setBounds(39, 13, 159, 120);
+					panel.add(lblNewLabel);
+					
+					JLabel lblVeuillezSelectionnerUn = new JLabel("Veuillez selectionner un des consommateurs du Centre Commercial : ");
+					lblVeuillezSelectionnerUn.setFont(new Font("Segoe UI", Font.BOLD, 14));
+					lblVeuillezSelectionnerUn.setBounds(297, 83, 461, 16);
+					frmPlateformeDesParcours.getContentPane().add(lblVeuillezSelectionnerUn);
 
 					table.addMouseListener(new java.awt.event.MouseAdapter() {
 						public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -124,39 +149,23 @@ public class Home_view {
 		
 		
 		frmPlateformeDesParcours = new JFrame();
-		frmPlateformeDesParcours.getContentPane().setBackground(SystemColor.menu);
-		frmPlateformeDesParcours.setTitle("Plateforme des parcours type");
-		frmPlateformeDesParcours.setBounds(100, 100, 629, 595);
+		frmPlateformeDesParcours.setResizable(false);
+		frmPlateformeDesParcours.setBackground(UIManager.getColor("activeCaption"));
+		frmPlateformeDesParcours.getContentPane().setBackground(SystemColor.inactiveCaptionBorder);
+		frmPlateformeDesParcours.setBounds(100, 100, 797, 714);
 		frmPlateformeDesParcours.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmPlateformeDesParcours.getContentPane().setLayout(null);
-
-		txtV = new JTextField();
-		txtV.setForeground(Color.BLACK);
-		txtV.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
-		txtV.setBackground(SystemColor.menu);
-		txtV.setText("Veuillez selectionner un des consommateurs du Centre Commercial : ");
-		txtV.setBounds(12, 65, 451, 22);
-		frmPlateformeDesParcours.getContentPane().add(txtV);
-		txtV.setColumns(10);
-
-		txtBienvenue = new JTextField();
-		txtBienvenue.setHorizontalAlignment(SwingConstants.CENTER);
-		txtBienvenue.setBounds(240, 13, 136, 25);
-		txtBienvenue.setBackground(SystemColor.menu);
-		txtBienvenue.setFont(new Font("Trebuchet MS", Font.BOLD | Font.ITALIC, 16));
-		txtBienvenue.setText("Bienvenue !");
-		frmPlateformeDesParcours.getContentPane().add(txtBienvenue);
-		txtBienvenue.setColumns(10);
 
 
 
 		table = new JTable();
-		table.setBackground(SystemColor.menu);
+		table.setShowGrid(false);
+		table.setBackground(SystemColor.inactiveCaptionBorder);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setFillsViewportHeight(true);
-		table.setFont(new Font("Verdana", Font.PLAIN, 14));
+		table.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		table.setForeground(SystemColor.desktop);
-		table.setBounds(12, 133, 584, 402);
+		table.setBounds(260, 123, 519, 544);
 		frmPlateformeDesParcours.getContentPane().add(table);
 
 		Connection connection = null;

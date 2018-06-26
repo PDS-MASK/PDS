@@ -23,17 +23,24 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JPanel;
+import javax.swing.ImageIcon;
 
 public class Information_customer {
 
 	private JFrame frmPlateformeDesParcours;
-	private JTextField txtLeConsommateurQui;
 	private static JTextField Name_Selected_Cons;
 	private static int id_consumer;
-	private JTextField txtCettePersonnePossde;
 	private JTextField SelectedProfilCons;
-	private JTextField txtVosHabitudesDachats;
 	private JTextField SelectedProfilPurchasePreference;
+	private JLabel lblNewLabel;
+	private JLabel lblProfilsIdentifis;
+	private JLabel lblHabitudesDachats;
+	private JPanel panel;
+	private JLabel lblPlateformeParcourstype;
+	private JLabel lblNewLabel_1;
 
 	public Information_customer(int atomicInteger)
 	{
@@ -72,57 +79,70 @@ public class Information_customer {
 	 */
 	void initialize() throws IOException {
 		frmPlateformeDesParcours = new JFrame();
-		frmPlateformeDesParcours.setTitle("Plateforme des parcours type");
+		frmPlateformeDesParcours.setBackground(SystemColor.inactiveCaptionBorder);
+		frmPlateformeDesParcours.getContentPane().setBackground(SystemColor.inactiveCaptionBorder);
+		frmPlateformeDesParcours.getContentPane().setForeground(SystemColor.inactiveCaptionBorder);
 		frmPlateformeDesParcours.setBounds(100, 100, 741, 633);
 		frmPlateformeDesParcours.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmPlateformeDesParcours.getContentPane().setLayout(null);
 
-		txtLeConsommateurQui = new JTextField();
-		txtLeConsommateurQui.setEditable(false);
-		txtLeConsommateurQui.setBackground(SystemColor.menu);
-		txtLeConsommateurQui.setText("Le consommateur qui a \u00E9t\u00E9 selectionn\u00E9 est :");
-		txtLeConsommateurQui.setBounds(12, 76, 263, 22);
-		frmPlateformeDesParcours.getContentPane().add(txtLeConsommateurQui);
-		txtLeConsommateurQui.setColumns(10);
-
 		Name_Selected_Cons = new JTextField();
 		Name_Selected_Cons.setEditable(false);
-		Name_Selected_Cons.setBackground(SystemColor.menu);
-		Name_Selected_Cons.setBounds(287, 76, 200, 22);
+		Name_Selected_Cons.setBackground(SystemColor.inactiveCaptionBorder);
+		Name_Selected_Cons.setBounds(325, 107, 200, 22);
 		frmPlateformeDesParcours.getContentPane().add(Name_Selected_Cons);
 		Name_Selected_Cons.setColumns(10);
-
-		txtCettePersonnePossde = new JTextField();
-		txtCettePersonnePossde.setText("Cette personne poss\u00E8de le(s) profil(s) suivant(s) :");
-		txtCettePersonnePossde.setEditable(false);
-		txtCettePersonnePossde.setColumns(10);
-		txtCettePersonnePossde.setBackground(SystemColor.menu);
-		txtCettePersonnePossde.setBounds(12, 142, 294, 22);
-		frmPlateformeDesParcours.getContentPane().add(txtCettePersonnePossde);
 
 		SelectedProfilCons = new JTextField();
 		SelectedProfilCons.setEditable(false);
 		SelectedProfilCons.setColumns(10);
-		SelectedProfilCons.setBackground(SystemColor.menu);
-		SelectedProfilCons.setBounds(318, 142, 211, 68);
+		SelectedProfilCons.setBackground(SystemColor.inactiveCaptionBorder);
+		SelectedProfilCons.setBounds(328, 229, 211, 68);
 		frmPlateformeDesParcours.getContentPane().add(SelectedProfilCons);
-
-		txtVosHabitudesDachats = new JTextField();
-		txtVosHabitudesDachats.setText("Vos habitudes d'achats sont : ");
-		txtVosHabitudesDachats.setEditable(false);
-		txtVosHabitudesDachats.setColumns(10);
-		txtVosHabitudesDachats.setBackground(SystemColor.menu);
-		txtVosHabitudesDachats.setBounds(12, 341, 180, 22);
-		frmPlateformeDesParcours.getContentPane().add(txtVosHabitudesDachats);
 
 		SelectedProfilPurchasePreference = new JTextField();
 		SelectedProfilPurchasePreference.setEditable(false);
 		SelectedProfilPurchasePreference.setColumns(10);
-		SelectedProfilPurchasePreference.setBackground(SystemColor.menu);
-		SelectedProfilPurchasePreference.setBounds(206, 326, 319, 52);
+		SelectedProfilPurchasePreference.setBackground(SystemColor.inactiveCaptionBorder);
+		SelectedProfilPurchasePreference.setBounds(325, 407, 319, 52);
 		frmPlateformeDesParcours.getContentPane().add(SelectedProfilPurchasePreference);
 
 		JButton btnNewButton = new JButton("Proposez moi un parcours !");
+		btnNewButton.setForeground(SystemColor.desktop);
+		btnNewButton.setBackground(SystemColor.inactiveCaptionBorder);
+		
+		lblNewLabel = new JLabel("Personne selection\u00E9e :");
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		lblNewLabel.setBounds(328, 62, 160, 16);
+		frmPlateformeDesParcours.getContentPane().add(lblNewLabel);
+		
+		lblProfilsIdentifis = new JLabel("Profil(s) identifi\u00E9(s) :");
+		lblProfilsIdentifis.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		lblProfilsIdentifis.setBounds(325, 185, 163, 16);
+		frmPlateformeDesParcours.getContentPane().add(lblProfilsIdentifis);
+		
+		lblHabitudesDachats = new JLabel("Habitude(s) d'achat(s) :");
+		lblHabitudesDachats.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		lblHabitudesDachats.setBackground(SystemColor.inactiveCaptionBorder);
+		lblHabitudesDachats.setBounds(325, 378, 163, 16);
+		frmPlateformeDesParcours.getContentPane().add(lblHabitudesDachats);
+		
+		panel = new JPanel();
+		panel.setBackground(SystemColor.activeCaption);
+		panel.setBounds(0, 0, 287, 586);
+		frmPlateformeDesParcours.getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		lblPlateformeParcourstype = new JLabel("Plateforme parcours-type");
+		lblPlateformeParcourstype.setBounds(44, 249, 231, 20);
+		lblPlateformeParcourstype.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblPlateformeParcourstype.setForeground(SystemColor.inactiveCaptionBorder);
+		panel.add(lblPlateformeParcourstype);
+		
+		lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\BEN MALEK Mohamed\\Downloads\\Mask_Logo_2.png"));
+		lblNewLabel_1.setBounds(58, 45, 158, 73);
+		panel.add(lblNewLabel_1);
 
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -132,7 +152,7 @@ public class Information_customer {
 
 			}
 		});
-		btnNewButton.setBounds(228, 500, 250, 32);
+		btnNewButton.setBounds(325, 516, 250, 32);
 		frmPlateformeDesParcours.getContentPane().add(btnNewButton);
 		frmPlateformeDesParcours.setVisible(true);
 
@@ -152,6 +172,8 @@ public class Information_customer {
 		
 		p.showSelectedIdCons(this.getId_consumer(),Name_Selected_Cons);
 		p.showSelectedConsProfil(this.getId_consumer(),SelectedProfilCons);
+		
+		
 
 
 		while(itr.hasNext())
@@ -172,14 +194,6 @@ public class Information_customer {
 
 	public void setFrame(JFrame frame) {
 		this.frmPlateformeDesParcours = frame;
-	}
-
-	public JTextField getTxtLeConsommateurQui() {
-		return txtLeConsommateurQui;
-	}
-
-	public void setTxtLeConsommateurQui(JTextField txtLeConsommateurQui) {
-		this.txtLeConsommateurQui = txtLeConsommateurQui;
 	}
 
 	public static JTextField getName_Selected_Cons() {
