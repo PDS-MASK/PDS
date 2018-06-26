@@ -25,11 +25,14 @@ import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.ImageIcon;
 
 public class itinerary_view {
 
 	private JFrame frame;
-	private JTextField txtIntineraryInterface;
 	private JTextField txtCombienDeMagasins;
 	private String word;
 	protected Object Sous_Article;
@@ -69,25 +72,21 @@ public class itinerary_view {
 	 */
 	void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(SystemColor.inactiveCaptionBorder);
 		frame.setBounds(100, 100, 742, 695);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		txtIntineraryInterface = new JTextField();
-		txtIntineraryInterface.setBackground(SystemColor.menu);
-		txtIntineraryInterface.setBounds(240, 13, 232, 22);
-		txtIntineraryInterface.setText("Interface des propositions de parcours");
-		frame.getContentPane().add(txtIntineraryInterface);
-		txtIntineraryInterface.setColumns(10);
-
 		ButtonGroup bg = new ButtonGroup();
 
 		JRadioButton rdbtnParcoursParPopularit = new JRadioButton("Parcours par rapport \u00E0 vos gouts");
-		rdbtnParcoursParPopularit.setBounds(32, 106, 245, 25);
+		rdbtnParcoursParPopularit.setBackground(SystemColor.inactiveCaptionBorder);
+		rdbtnParcoursParPopularit.setBounds(409, 65, 245, 25);
 		frame.getContentPane().add(rdbtnParcoursParPopularit);
 
 		JRadioButton rdbtnParcoursParLocalisation = new JRadioButton("Parcours par Localisation");
-		rdbtnParcoursParLocalisation.setBounds(32, 142, 245, 25);
+		rdbtnParcoursParLocalisation.setBackground(SystemColor.inactiveCaptionBorder);
+		rdbtnParcoursParLocalisation.setBounds(409, 107, 245, 25);
 		frame.getContentPane().add(rdbtnParcoursParLocalisation);
 
 		bg.add(rdbtnParcoursParPopularit);
@@ -147,8 +146,25 @@ public class itinerary_view {
 					
 			}
 		});
-		btnGo.setBounds(557, 268, 97, 25);
+		btnGo.setBounds(469, 465, 97, 25);
 		frame.getContentPane().add(btnGo);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(SystemColor.activeCaption);
+		panel.setBounds(0, 0, 280, 648);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblPl = new JLabel("Plateforme des parcours-type");
+		lblPl.setForeground(SystemColor.inactiveCaptionBorder);
+		lblPl.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblPl.setBounds(33, 286, 216, 37);
+		panel.add(lblPl);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\BEN MALEK Mohamed\\Downloads\\Mask_Logo_2.png"));
+		lblNewLabel.setBounds(60, 97, 152, 83);
+		panel.add(lblNewLabel);
 		frame.setVisible(true);
 
 

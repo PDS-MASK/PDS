@@ -33,8 +33,8 @@ public class Information_customer {
 	private JFrame frmPlateformeDesParcours;
 	private static JTextField Name_Selected_Cons;
 	private static int id_consumer;
-	private JTextField SelectedProfilCons;
-	private JTextField SelectedProfilPurchasePreference;
+	private static JTextField SelectedProfilCons;
+	private  static JTextField SelectedProfilPurchasePreference;
 	private JLabel lblNewLabel;
 	private JLabel lblProfilsIdentifis;
 	private JLabel lblHabitudesDachats;
@@ -164,14 +164,19 @@ public class Information_customer {
 		Personne p = new Personne();
 		JOptionPane.showMessageDialog(null,Home_view.getSelected_id_consumer());
 		
-		Home_view.getOut().println("select");
-		String reponse = Home_view.getIn().readLine();
-		System.out.println(reponse);
-		Information_customer.getName_Selected_Cons().setText(reponse);
+		Home_view.getOut().println("select name cons");
+		String reponse_name = Home_view.getIn().readLine();
+		System.out.println(reponse_name);
+		Information_customer.getName_Selected_Cons().setText(reponse_name);
+		
+		Home_view.getOut().println("select profil cons");
+		String reponse_profil = Home_view.getIn().readLine();
+		System.out.println("heyyyyyyyyyyyyyy   "+reponse_profil);
+		Information_customer.getSelectedProfilCons().setText(reponse_profil);
 		
 		
 		p.showSelectedIdCons(this.getId_consumer(),Name_Selected_Cons);
-		p.showSelectedConsProfil(this.getId_consumer(),SelectedProfilCons);
+		//p.showSelectedConsProfil(this.getId_consumer(),SelectedProfilCons);
 		
 		
 
@@ -187,6 +192,22 @@ public class Information_customer {
 	}
 
 
+
+	public static JTextField getSelectedProfilCons() {
+		return SelectedProfilCons;
+	}
+
+	public void setSelectedProfilCons(JTextField selectedProfilCons) {
+		SelectedProfilCons = selectedProfilCons;
+	}
+
+	public static JTextField getSelectedProfilPurchasePreference() {
+		return SelectedProfilPurchasePreference;
+	}
+
+	public void setSelectedProfilPurchasePreference(JTextField selectedProfilPurchasePreference) {
+		SelectedProfilPurchasePreference = selectedProfilPurchasePreference;
+	}
 
 	public JFrame getFrame() {
 		return frmPlateformeDesParcours;

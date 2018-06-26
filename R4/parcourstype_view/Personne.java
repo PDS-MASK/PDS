@@ -138,13 +138,14 @@ public class Personne {
 		 
 		}
 	
-	public void showSelectedConsProfil(int i, JTextField SelectedProfilCons){
+	public static String showSelectedConsProfil(int i, JTextField SelectedProfilCons){
+		String resultat = " ";
 		try{
 		Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","PDS","toto");
 		String sql = "Select nom_profil from PROFIL,PROFIL_PERSONNE,PERSONNE WHERE profil_personne.id_profil = PROFIL.ID_PROFIL and PROFIL_PERSONNE.ID_PERSONNE = PERSONNE.ID_PERSONNE and PERSONNE.ID_PERSONNE ="+i;
 		Object pst = connection.prepareStatement(sql);
 		Object rs = ((PreparedStatement) pst).executeQuery();
-		String resultat = " ";
+		
 		System.out.print(" "+ rs);
 		 while(((ResultSet) rs).next()){
 			  resultat = resultat+((ResultSet) rs).getString(i);
@@ -155,6 +156,7 @@ public class Personne {
 		JOptionPane.showMessageDialog(null, ex);
 		 
 		}
+		return resultat;
 		 
 		}
 
