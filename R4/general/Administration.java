@@ -1,3 +1,5 @@
+package parcourstype_view;
+
 package general;
 
 import java.awt.EventQueue;
@@ -45,6 +47,24 @@ public class Administration extends JFrame {
 		btnGestionDesStocks.setBounds(89, 79, 256, 21);
 		contentPane.add(btnGestionDesStocks);
 		
+		
+		JButton btnParcours = new JButton("Parcours type");
+		btnGestionDesStocks.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+
+				try {
+					Home_view window = new Home_view();
+					window.frmPlateformeDesParcours.setVisible(true);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		btnGestionDesStocks.setFont(new Font("Berlin Sans FB", Font.PLAIN, 10));
+		btnGestionDesStocks.setBounds(89, 79, 256, 21);
+		contentPane.add(btnGestionDesStocks);
+		
 		JButton btnGestionDesEmplacements = new JButton("Gestion des emplacements");
 		btnGestionDesEmplacements.setFont(new Font("Berlin Sans FB", Font.PLAIN, 10));
 		btnGestionDesEmplacements.setBounds(89, 110, 256, 21);
@@ -59,6 +79,8 @@ public class Administration extends JFrame {
 		lblAdministration.setFont(new Font("Berlin Sans FB Demi", Font.BOLD, 25));
 		lblAdministration.setBounds(135, 28, 182, 21);
 		contentPane.add(lblAdministration);
+		
+
 	}
 	
 	
