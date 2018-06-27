@@ -121,7 +121,7 @@ public class itinerary_view {
 		System.out.println("Parcours :"+reponse_parcours);
 		//Information_customer.getSelectedProfilPurchasePreference().setText(reponse_habitude);
 		
-		//Emplacement.showAllShop(Personne.getPreference());
+		Emplacement.showAllShop(Personne.getPreference());
 
 
 	}
