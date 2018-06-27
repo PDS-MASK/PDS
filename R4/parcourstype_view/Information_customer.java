@@ -158,7 +158,6 @@ public class Information_customer {
 
 		Sous_Categorie sc = new Sous_Categorie();
 		sc.showSelectedConsPurchasePreference(this.getId_consumer(), SelectedProfilPurchasePreference);
-		java.util.Iterator<String> itr = sc.preference.iterator();
 		
 		
 		Personne p = new Personne();
@@ -174,19 +173,16 @@ public class Information_customer {
 		System.out.println("heyyyyyyyyyyyyyy   "+reponse_profil);
 		Information_customer.getSelectedProfilCons().setText(reponse_profil);
 		
+		Home_view.getOut().println("select habitude cons");
+		String reponse_habitude = Home_view.getIn().readLine();
+		System.out.println("heyyyyyyyyyyyyyy 2  "+reponse_habitude);
+		Information_customer.getSelectedProfilCons().setText(reponse_habitude);
 		
-		p.showSelectedIdCons(this.getId_consumer(),Name_Selected_Cons);
+		
+		//p.showSelectedIdCons(this.getId_consumer(),Name_Selected_Cons);
 		//p.showSelectedConsProfil(this.getId_consumer(),SelectedProfilCons);
 		
 		
-
-
-		while(itr.hasNext())
-
-		{
-			System.out.println(itr.next());
-
-		}
 
 
 	}

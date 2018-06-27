@@ -26,7 +26,7 @@ public class Personne {
 	private int telephone;
 	private String adresse_personne;
 	private String adresse_mail_personne;
-	public PoolConnexion pool = new PoolConnexion();
+	public static PoolConnexion pool = new PoolConnexion();
 
 	
 	
@@ -105,6 +105,12 @@ public class Personne {
 		}
 	
 
+	public static PoolConnexion getPool() {
+		return pool;
+	}
+	public static void setPool(PoolConnexion pool) {
+		Personne.pool = pool;
+	}
 	public static String showSelectedIdCons(int i, JTextField Name_Selected_Cons){
 		
 		System.out.println(i);
@@ -112,7 +118,8 @@ public class Personne {
 		String nom = null;
 		String prenom = null;
 		try{
-		Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","PDS","toto");
+		Connection connection = pool.getConnection();
+		//Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","PDS","toto");
 		String sql = "Select NOM_PERSONNE,PRENOM_PERSONNE from PERSONNE where id_personne ="+i;
 		Object pst = connection.prepareStatement(sql);
 		ResultSet rs = ((PreparedStatement) pst).executeQuery();
@@ -125,12 +132,13 @@ public class Personne {
 			  
 			 }
 		 resultat = nom+prenom;
+		 pool.release(connection);
 		// Name_Selected_Cons.setText(resultat);
 		 
 		 
 		}
 		catch(Exception ex){
-		JOptionPane.showMessageDialog(null, ex);
+		//JOptionPane.showMessageDialog(null, ex);
 		 
 		}
 		System.out.println(resultat);
@@ -141,7 +149,8 @@ public class Personne {
 	public static String showSelectedConsProfil(int i, JTextField SelectedProfilCons){
 		String resultat = " ";
 		try{
-		Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","PDS","toto");
+		Connection connection = pool.getConnection();
+		//Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","PDS","toto");
 		String sql = "Select nom_profil from PROFIL,PROFIL_PERSONNE,PERSONNE WHERE profil_personne.id_profil = PROFIL.ID_PROFIL and PROFIL_PERSONNE.ID_PERSONNE = PERSONNE.ID_PERSONNE and PERSONNE.ID_PERSONNE ="+i;
 		Object pst = connection.prepareStatement(sql);
 		Object rs = ((PreparedStatement) pst).executeQuery();
@@ -151,12 +160,16 @@ public class Personne {
 			  resultat = resultat+((ResultSet) rs).getString(i);
 			 }
 		 SelectedProfilCons.setText(resultat);
+		 pool.release(connection);
 		}
+		
 		catch(Exception ex){
-		JOptionPane.showMessageDialog(null, ex);
+		//JOptionPane.showMessageDialog(null, ex);
 		 
 		}
+		
 		return resultat;
+		
 		 
 		}
 

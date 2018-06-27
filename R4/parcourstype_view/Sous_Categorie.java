@@ -14,7 +14,7 @@ public class Sous_Categorie {
 	private int id_souscategorie;
 	private int id_categorie;
 	private String nom_souscategorie;
-	public ArrayList<String> preference = new ArrayList<String>();
+	public static String preference = "";
 
 	
 	
@@ -38,36 +38,32 @@ public class Sous_Categorie {
 		this.nom_souscategorie = nom_souscategorie;
 	}
 	
-	public void showSelectedConsPurchasePreference(int i, JTextField SelectedProfilPurchasePreference)
+	public static String showSelectedConsPurchasePreference(int i, JTextField SelectedProfilPurchasePreference)
 	{
-		
+			String resultat = " ";
 			try{
-			Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","PDS","toto");
+			Connection connection = Personne.getPool().getConnection();
+			//Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","PDS","toto");
 			String sql = "select nom_souscategorie from sous_categorie , categorie_personne where sous_categorie.id_souscategorie = categorie_personne.ID_SOUSCATEGORIE and categorie_personne.ID_PERSONNE ="+i;
 			Object pst = connection.prepareStatement(sql);
 			Object rs = ((PreparedStatement) pst).executeQuery();
-			String resultat = " ";
+			
 			System.out.print(" "+ rs);
 			 while(((ResultSet) rs).next()){
 				  resultat = resultat+((ResultSet) rs).getString(i);
-				  preference.add(((ResultSet) rs).getString(i));
 				 }
 			 SelectedProfilPurchasePreference.setText(resultat);
 			}
 			catch(Exception ex){
-			JOptionPane.showMessageDialog(null, ex);
+			//JOptionPane.showMessageDialog(null, ex);
 			 
 			}
+			
+			return resultat;
 			 
 			
 		
 		
-	}
-	public ArrayList getPreference() {
-		return preference;
-	}
-	public void setPreference(ArrayList preference) {
-		this.preference = preference;
 	}
 	
 	
