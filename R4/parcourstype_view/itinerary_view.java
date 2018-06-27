@@ -32,6 +32,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
+import javax.swing.JTable;
 
 public class itinerary_view {
 
@@ -39,6 +40,7 @@ public class itinerary_view {
 	private JTextField txtCombienDeMagasins;
 	private String word;
 	protected Object Sous_Article;
+	static JTable table_parcours;
 
 	
 	public itinerary_view(String word)
@@ -89,19 +91,19 @@ public class itinerary_view {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(SystemColor.activeCaption);
-		panel.setBounds(0, 0, 280, 648);
+		panel.setBounds(0, 0, 239, 648);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblPl = new JLabel("Plateforme des parcours-type");
 		lblPl.setForeground(SystemColor.inactiveCaptionBorder);
 		lblPl.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		lblPl.setBounds(33, 286, 216, 37);
+		lblPl.setBounds(12, 286, 216, 37);
 		panel.add(lblPl);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\BEN MALEK Mohamed\\Downloads\\Mask_Logo_2.png"));
-		lblNewLabel.setBounds(60, 97, 152, 83);
+		lblNewLabel.setBounds(40, 97, 152, 83);
 		panel.add(lblNewLabel);
 		
 		JLabel lblVoiciLeParcours = new JLabel("Voici le parcours que l'on vous propose :");
@@ -112,8 +114,16 @@ public class itinerary_view {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(SystemColor.inactiveCaptionBorder);
 		panel_1.setBorder(new LineBorder(SystemColor.activeCaption, 4));
-		panel_1.setBounds(292, 151, 420, 464);
+		panel_1.setBounds(251, 171, 461, 464);
 		frame.getContentPane().add(panel_1);
+		panel_1.setLayout(null);
+		
+		table_parcours = new JTable();
+		table_parcours.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		table_parcours.setShowHorizontalLines(false);
+		table_parcours.setBackground(SystemColor.inactiveCaption);
+		table_parcours.setBounds(12, 13, 437, 438);
+		panel_1.add(table_parcours);
 		frame.setVisible(true);
 		
 		Home_view.getOut().println("select parcours");

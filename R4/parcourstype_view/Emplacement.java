@@ -77,7 +77,7 @@ public class Emplacement {
 							 String nom_theme = ((ResultSet) rs).getString("nom_theme");
 							 System.out.println(i+"--- Etape 3 : valeurs inserer "+nom_boutique+" "+nom_theme);
 							 hmap.put(nom_boutique,nom_theme);
-							 Parcourstype_view.table_parcours.setModel(DbUtils.resultSetToTableModel((ResultSet) rs));
+							 itinerary_view.table_parcours.setModel(DbUtils.resultSetToTableModel((ResultSet) rs));
 							 same_theme = false;
 				    	  }	 
 				      }
