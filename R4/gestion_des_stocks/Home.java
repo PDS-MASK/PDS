@@ -106,7 +106,7 @@ public class Home extends JFrame {
 		btnApproStock.setBounds(10, 390, 201, 21);
 		contentPane.add(btnApproStock);
 
-		JButton btnMajStock = new JButton("Mise à jour des stocks");
+		JButton btnMajStock = new JButton("Mise Ã  jour des stocks");
 		btnMajStock.setBounds(10, 436, 201, 21);
 		contentPane.add(btnMajStock);
 
@@ -173,7 +173,9 @@ public class Home extends JFrame {
 				System.out.println(boutiqueSelectionnee);
 				Statement sta;
 				try {
+					//send a msg to the server
 					out.println("select_gestion_stock" + boutiqueSelectionnee);
+					//return the data in msgrecu
 					String msgrecu = msg();
 					System.out.println("msg recu :   " + msgrecu);
 					showTableData(msgrecu);
@@ -233,8 +235,6 @@ public class Home extends JFrame {
 
 	public void showTableData() {
 		try {
-			//Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "ahamdi", "resident4");
-			//String sql = "SELECT NOM_BOUTIQUE, NOM_ARTICLE, TAILLE, COULEUR, STOCK FROM ARTICLE INNER JOIN SOUS_ARTICLE ON ARTICLE.ID_ARTICLE = SOUS_ARTICLE.ID_ARTICLE INNER JOIN BOUTIQUE ON BOUTIQUE.ID_BOUTIQUE = SOUS_ARTICLE.ID_BOUTIQUE";
 			String sql = "SELECT NOM_ARTICLE, CATEGORIE, QUANTITE FROM ARTICLE";
 			Object pst = con.prepareStatement(sql);
 			Object rs = ((PreparedStatement) pst).executeQuery();
