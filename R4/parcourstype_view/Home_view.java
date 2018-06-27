@@ -35,7 +35,7 @@ import javax.swing.ImageIcon;
 
 public class Home_view {
 
-	private static JFrame frmPlateformeDesParcours;
+	static JFrame frmPlateformeDesParcours;
 	private static JTable table;
 	private static Socket socket;
 	private static PrintWriter out ; // to send message to the client 
