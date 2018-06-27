@@ -16,8 +16,8 @@ public class PoolConnexion implements PoolConnexion_Constructor {
 		public Pool_Connexion() {
 
 			this.url = "jdbc:oracle:thin:@localhost:1521:xe";
-			this.user = "PDS";
-			this.password = "toto";
+			this.user = "ahamdi";
+			this.password = "pds123";
 		}
 
 		public Connection getConnection() {
