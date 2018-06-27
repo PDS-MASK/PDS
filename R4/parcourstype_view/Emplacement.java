@@ -3,6 +3,7 @@ package parcourstype_view;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -48,7 +49,7 @@ public class Emplacement {
 		this.redevance = redevance;
 	}
 	
-	public static String showAllShop()
+	public static String showAllShop(String[] strings)
 	{
 			String resultat = "ITS OK";
 			try{
@@ -57,15 +58,33 @@ public class Emplacement {
 			String sql = "select boutique.nom_boutique , emplacement.nom_emplacement , theme.nom_theme from boutique,emplacement,emplacement_boutique,THEME,THEME_BOUTIQUE where boutique.ID_BOUTIQUE = emplacement_boutique.ID_BOUTIQUE and emplacement.ID_EMPLACEMENT = emplacement_boutique.ID_EMPLACEMENT and boutique.ID_BOUTIQUE = THEME_BOUTIQUE.ID_BOUTIQUE and THEME.ID_THEME = THEME_BOUTIQUE.ID_THEME order by emplacement.ID_EMPLACEMENT";
 			Object pst = connection.prepareStatement(sql);
 			Object rs = ((PreparedStatement) pst).executeQuery();
-			
+			boolean same_theme=false;
 			System.out.print(" "+ rs);
 			int cpt =0;
 			 while(((ResultSet) rs).next()){
-				 String nom_boutique = ((ResultSet) rs).getString("nom_boutique");
-				 String nom_theme = ((ResultSet) rs).getString("nom_theme");
-				 hmap.put(nom_boutique,nom_theme);
-				 cpt++;
 				 
+				 for(int i = 0; i < strings.length; i++)
+				    {
+				      if (strings[i].contains(((ResultSet) rs).getString("nom_theme")))
+				      {		
+				    	  same_theme = true;
+				    	  
+				    	  if (same_theme == true)
+				    	  {
+				    	  String nom_boutique = ((ResultSet) rs).getString("nom_boutique");
+							 String nom_theme = ((ResultSet) rs).getString("nom_theme");
+							 System.out.println(i+"--- Etape 3 : valeurs inserer "+nom_boutique+" "+nom_theme);
+							 hmap.put(nom_boutique,nom_theme);
+							 same_theme = false;
+				    	  }	 
+				      }
+				    } 
+				 //String nom_boutique = ((ResultSet) rs).getString("nom_boutique");
+				// String nom_theme = ((ResultSet) rs).getString("nom_theme");
+				// System.out.println(nom_boutique+" "+nom_theme);
+				// hmap.put(nom_boutique,nom_theme);
+				// cpt++;
+				 cpt++; 
 				 }
 			 
 			 for (HashMap.Entry<String, String> entry : hmap.entrySet()) {

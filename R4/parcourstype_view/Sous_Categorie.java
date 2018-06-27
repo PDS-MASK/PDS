@@ -14,7 +14,7 @@ public class Sous_Categorie {
 	private int id_souscategorie;
 	private int id_categorie;
 	private String nom_souscategorie;
-	public static ArrayList<String> preference = new ArrayList<String>();
+
 
 	
 	
@@ -51,7 +51,7 @@ public class Sous_Categorie {
 			System.out.print(" "+ rs);
 			 while(((ResultSet) rs).next()){
 				  resultat = resultat+((ResultSet) rs).getString(i);
-				  preference.add(((ResultSet) rs).getString(i));
+				 // preference.add(((ResultSet) rs).getString(i));
 				 }
 			 SelectedProfilPurchasePreference.setText(resultat);
 			}
@@ -65,12 +65,6 @@ public class Sous_Categorie {
 			
 		
 		
-	}
-	public static ArrayList<String> getPreference() {
-		return preference;
-	}
-	public static void setPreference(ArrayList<String> preference) {
-		Sous_Categorie.preference = preference;
 	}
 	
 	

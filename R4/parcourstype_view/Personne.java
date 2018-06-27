@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -14,6 +15,7 @@ import javax.swing.JTextField;
 
 import net.proteanit.sql.DbUtils;
 import server.PoolConnexion;
+import parcourstype_view.Sous_Categorie;
 
 public class Personne {
 	
@@ -27,6 +29,7 @@ public class Personne {
 	private String adresse_personne;
 	private String adresse_mail_personne;
 	public static PoolConnexion pool = new PoolConnexion();
+	public static String[] preference;
 
 	
 	
@@ -172,5 +175,13 @@ public class Personne {
 		
 		 
 		}
+	public static String[] getPreference() {
+		return preference;
+	}
+	public static void setPreference(String[] preference) {
+		Personne.preference = preference;
+	}
+
+	
 
 }

@@ -100,7 +100,8 @@ public class itinerary_view {
 		panel.add(lblNewLabel);
 		frame.setVisible(true);
 		
-		Emplacement.showAllShop();
+		
+		Emplacement.showAllShop(Personne.getPreference());
 
 
 	}
