@@ -148,7 +148,12 @@ public class Information_customer {
 			public void actionPerformed(ActionEvent arg0) {
 				frmPlateformeDesParcours.setVisible(false);
 				itinerary_view iv = new itinerary_view(SelectedProfilPurchasePreference.getText());
-				iv.initialize();
+				try {
+					iv.initialize();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
 		});

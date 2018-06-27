@@ -104,6 +104,12 @@ public class Emplacement {
 		
 		
 	}
+	public static HashMap<String, String> getHmap() {
+		return hmap;
+	}
+	public static void setHmap(HashMap<String, String> hmap) {
+		Emplacement.hmap = hmap;
+	}
 	
 
 }

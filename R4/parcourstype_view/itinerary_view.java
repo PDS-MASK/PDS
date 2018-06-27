@@ -25,10 +25,13 @@ import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.ImageIcon;
+import javax.swing.border.LineBorder;
 
 public class itinerary_view {
 
@@ -62,15 +65,17 @@ public class itinerary_view {
 
 	/**
 	 * Create the application.
+	 * @throws IOException 
 	 */
-	public itinerary_view() {
+	public itinerary_view() throws IOException {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws IOException 
 	 */
-	void initialize() {
+	void initialize() throws IOException {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(SystemColor.inactiveCaptionBorder);
 		frame.setBounds(100, 100, 742, 695);
@@ -98,13 +103,26 @@ public class itinerary_view {
 		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\BEN MALEK Mohamed\\Downloads\\Mask_Logo_2.png"));
 		lblNewLabel.setBounds(60, 97, 152, 83);
 		panel.add(lblNewLabel);
+		
+		JLabel lblVoiciLeParcours = new JLabel("Voici le parcours que l'on vous propose :");
+		lblVoiciLeParcours.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		lblVoiciLeParcours.setBounds(368, 110, 344, 21);
+		frame.getContentPane().add(lblVoiciLeParcours);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(SystemColor.inactiveCaptionBorder);
+		panel_1.setBorder(new LineBorder(SystemColor.activeCaption, 4));
+		panel_1.setBounds(292, 151, 420, 464);
+		frame.getContentPane().add(panel_1);
 		frame.setVisible(true);
 		
+		Home_view.getOut().println("select parcours");
+		String reponse_parcours = Home_view.getIn().readLine();
+		System.out.println("Parcours :"+reponse_parcours);
+		//Information_customer.getSelectedProfilPurchasePreference().setText(reponse_habitude);
 		
-		Emplacement.showAllShop(Personne.getPreference());
+		//Emplacement.showAllShop(Personne.getPreference());
 
 
 	}
-
-	
 }
