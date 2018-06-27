@@ -78,76 +78,9 @@ public class itinerary_view {
 		frame.getContentPane().setLayout(null);
 
 		ButtonGroup bg = new ButtonGroup();
-
-		JRadioButton rdbtnParcoursParPopularit = new JRadioButton("Parcours par rapport \u00E0 vos gouts");
-		rdbtnParcoursParPopularit.setBackground(SystemColor.inactiveCaptionBorder);
-		rdbtnParcoursParPopularit.setBounds(409, 65, 245, 25);
-		frame.getContentPane().add(rdbtnParcoursParPopularit);
-
-		JRadioButton rdbtnParcoursParLocalisation = new JRadioButton("Parcours par Localisation");
-		rdbtnParcoursParLocalisation.setBackground(SystemColor.inactiveCaptionBorder);
-		rdbtnParcoursParLocalisation.setBounds(409, 107, 245, 25);
-		frame.getContentPane().add(rdbtnParcoursParLocalisation);
-
-		bg.add(rdbtnParcoursParPopularit);
-		bg.add(rdbtnParcoursParLocalisation);
 		JComboBox comboBox = new JComboBox();
-		
-		rdbtnParcoursParPopularit.addMouseListener(new MouseAdapter() {
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				txtCombienDeMagasins = new JTextField();
-				txtCombienDeMagasins.setBackground(SystemColor.menu);
-				txtCombienDeMagasins.setText("Que cherchez-vous comme article ? ");
-				txtCombienDeMagasins.setBounds(32, 269, 346, 22);
-				frame.getContentPane().add(txtCombienDeMagasins);
-				txtCombienDeMagasins.setColumns(10);
-
-				
-				String[] resultat = word.split("\\s+");
-				
-				for (int i=1;i<resultat.length;i++)
-
-				{
-					comboBox.addItem(resultat[i]);
-					System.out.println(resultat[i]);
-
-
-				}
-				comboBox.setBounds(406, 263, 37, 34);
-			
-				frame.getContentPane().add(comboBox);
-
-			}
-		});
-
-
-	
-
-		JButton btnGo = new JButton("Go !");
 		//itinerary_view itinerary = new itinerary_view();
 		Sous_Article sa = new Sous_Article();
-		
-		btnGo.addMouseListener(new MouseAdapter() {
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int getNumberComboBox;
-				getNumberComboBox = comboBox.getSelectedIndex()+1;
-				String getContentComboBox = comboBox.getSelectedItem().toString();
-				JOptionPane.showMessageDialog(null,getContentComboBox);
-				JOptionPane.showMessageDialog(null,getNumberComboBox);
-				
-				if (rdbtnParcoursParPopularit.isSelected())
-					 
-					sa.ShowItineraryByPreference(getNumberComboBox,getContentComboBox);
-					
-			}
-		});
-		btnGo.setBounds(469, 465, 97, 25);
-		frame.getContentPane().add(btnGo);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(SystemColor.activeCaption);
@@ -166,6 +99,8 @@ public class itinerary_view {
 		lblNewLabel.setBounds(60, 97, 152, 83);
 		panel.add(lblNewLabel);
 		frame.setVisible(true);
+		
+		Emplacement.showAllShop();
 
 
 	}
