@@ -13,7 +13,11 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import javax.swing.JOptionPane;
-
+import parcourstype_view.Emplacement;
+import parcourstype_view.Home_view;
+import parcourstype_view.Information_customer;
+import parcourstype_view.Personne;
+import parcourstype_view.Sous_Categorie;
 
 public class ClientProcessing implements Runnable{
 
@@ -96,7 +100,7 @@ public class ClientProcessing implements Runnable{
 
 				if(messageReceived.contains("select_gestion_stock")) {
 					boutiqueSelectionnee = messageReceived.substring(20);
-					System.out.println("Boutique reçu : " + boutiqueSelectionnee);
+					System.out.println("Boutique reÃ§u : " + boutiqueSelectionnee);
 					messageReceived = "select_gestion_stock";
 				}
 
@@ -115,6 +119,22 @@ public class ClientProcessing implements Runnable{
 					out.println(respond);
 					out.flush();
 					
+					break;
+				case "select name cons":
+					//System.out.println(Home_view.getSelected_id_consumer());
+					respond = Personne.showSelectedIdCons(Home_view.getSelected_id_consumer(), Information_customer.getName_Selected_Cons());
+					out.println(respond);
+					out.flush();
+					break;
+				case "select profil cons":
+					respond = Personne.showSelectedConsProfil(Home_view.getSelected_id_consumer(), Information_customer.getSelectedProfilCons());
+					out.println(respond);
+					out.flush();
+					break;
+				case "select habitude cons":
+					respond = Sous_Categorie.showSelectedConsPurchasePreference(Home_view.getSelected_id_consumer(), Information_customer.getSelectedProfilPurchasePreference());
+					out.println(respond);
+					out.flush();
 					break;
 
 				default :
